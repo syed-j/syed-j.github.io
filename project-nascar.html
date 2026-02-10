@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASCAR Pit Stop Intelligence | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-card: #141c2e;
+            --cyan: #06d6a0;
+            --cyan-dim: rgba(6,214,160,0.12);
+            --text-primary: #e0e0e0;
+            --text-secondary: #8892a4;
+            --text-heading: #ffffff;
+            --border-color: rgba(6,214,160,0.15);
+            --gradient-cyan: linear-gradient(135deg, #06d6a0, #00b4d8);
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-body: 'Outfit', sans-serif;
+        }
+        body { background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-body); line-height: 1.7; overflow-x: hidden; }
+        a { color: var(--cyan); text-decoration: none; }
+        .back-link { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--font-mono); font-size: .95rem; padding: 1.5rem 2rem; color: var(--cyan); }
+        .back-link:hover { opacity: .8; }
+
+        .hero { max-width: 1100px; margin: 0 auto; padding: 1rem 2rem 3rem; }
+        .hero h1 { font-family: var(--font-body); font-weight: 700; font-size: clamp(2.2rem, 5vw, 3.4rem); background: var(--gradient-cyan); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+        .hero .subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 780px; margin-bottom: 1.8rem; line-height: 1.8; }
+        .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2rem; }
+        .tag { font-family: var(--font-mono); font-size: .8rem; padding: .4rem .9rem; border: 1px solid var(--border-color); border-radius: 999px; color: var(--cyan); }
+        .stat-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap: .8rem; }
+        .stat-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem; }
+        .stat-card .num { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 700; color: var(--cyan); }
+        .stat-card .label { font-size: .82rem; color: var(--text-secondary); margin-top: .2rem; }
+
+        section { max-width: 1100px; margin: 0 auto; padding: 2.5rem 2rem; }
+        .section-label { font-family: var(--font-mono); font-size: .82rem; color: var(--cyan); letter-spacing: 3px; text-transform: uppercase; margin-bottom: .5rem; }
+        .section-title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--text-heading); margin-bottom: 1rem; }
+        .prose { color: var(--text-secondary); line-height: 1.8; max-width: 800px; }
+
+        .cards { display: grid; gap: 1rem; margin-top: 1.2rem; }
+        .cards-2 { grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); }
+        .cards-3 { grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); }
+        .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.4rem; }
+        .card h3 { font-size: 1.05rem; font-weight: 600; color: var(--text-heading); margin-bottom: .4rem; }
+        .card p { font-size: .88rem; color: var(--text-secondary); line-height: 1.65; }
+
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: .88rem; }
+        .data-table th { text-align: left; padding: .7rem 1rem; background: var(--bg-card); color: var(--cyan); font-family: var(--font-mono); font-size: .78rem; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid var(--border-color); }
+        .data-table td { padding: .65rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-primary); }
+        .data-table tr:hover td { background: rgba(6,214,160,0.03); }
+        .data-table .rank { font-family: var(--font-mono); color: var(--cyan); font-weight: 600; }
+        .data-table .metric { font-family: var(--font-mono); color: var(--text-heading); }
+
+        .cat-bar-wrap { margin-top: 1rem; }
+        .cat-row { display: flex; align-items: center; gap: 1rem; margin-bottom: .6rem; }
+        .cat-name { font-family: var(--font-mono); font-size: .82rem; color: var(--text-primary); width: 100px; flex-shrink: 0; }
+        .cat-bar-bg { flex: 1; height: 28px; background: rgba(255,255,255,0.04); border-radius: 6px; overflow: hidden; }
+        .cat-bar { height: 100%; background: var(--gradient-cyan); border-radius: 6px; display: flex; align-items: center; padding-left: .6rem; }
+        .cat-bar span { font-family: var(--font-mono); font-size: .72rem; color: var(--bg-primary); font-weight: 600; }
+        .cat-pct { font-family: var(--font-mono); font-size: .78rem; color: var(--text-secondary); width: 55px; text-align: right; flex-shrink: 0; }
+
+        .pipeline { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; margin-top: 1.2rem; }
+        .pipe-step { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: .8rem 1.2rem; text-align: center; min-width: 130px; flex: 1; }
+        .pipe-step .step-num { font-family: var(--font-mono); font-size: .7rem; color: var(--cyan); letter-spacing: 2px; text-transform: uppercase; }
+        .pipe-step .step-title { font-size: .92rem; font-weight: 600; color: var(--text-heading); margin: .3rem 0 .2rem; }
+        .pipe-step .step-desc { font-size: .78rem; color: var(--text-secondary); }
+        .pipe-arrow { color: var(--cyan); font-size: 1.3rem; flex-shrink: 0; }
+
+        .schema-block { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem 1.4rem; margin-top: 1rem; overflow-x: auto; }
+        .schema-block pre { font-family: var(--font-mono); font-size: .8rem; color: var(--text-primary); line-height: 1.6; white-space: pre-wrap; }
+        .schema-block .col-name { color: var(--cyan); }
+        .schema-block .col-type { color: var(--text-secondary); }
+
+        .fade-up { opacity: 0; transform: translateY(25px); transition: all .5s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.8rem; }
+            .stat-row { grid-template-columns: repeat(2, 1fr); }
+            .cat-name { width: 75px; font-size: .72rem; }
+            .pipeline { flex-direction: column; }
+            .pipe-arrow { transform: rotate(90deg); }
+        }
+    </style>
+</head>
+<body>
+<a class="back-link" href="index.html">← Back to Portfolio</a>
+
+<div class="hero">
+    <h1>NASCAR Pit Stop Intelligence</h1>
+    <p class="subtitle">Built an end-to-end analytics pipeline — from consolidating 20 raw race files via Tableau Prep into 2 unified datasets, to interactive Tableau dashboards analyzing 1,575 pit stops and 384 race entries across 10 NASCAR Cup Series races (2019 season).</p>
+    <div class="tags">
+        <span class="tag">Tableau</span>
+        <span class="tag">Tableau Prep</span>
+        <span class="tag">ETL</span>
+        <span class="tag">Excel</span>
+        <span class="tag">Data Visualization</span>
+        <span class="tag">Sports Analytics</span>
+    </div>
+    <div class="stat-row">
+        <div class="stat-card"><div class="num">1,575</div><div class="label">Pit Stops Analyzed</div></div>
+        <div class="stat-card"><div class="num">54</div><div class="label">Drivers Tracked</div></div>
+        <div class="stat-card"><div class="num">20 → 2</div><div class="label">Files Consolidated</div></div>
+        <div class="stat-card"><div class="num">8</div><div class="label">Tracks</div></div>
+        <div class="stat-card"><div class="num">38.4s</div><div class="label">Fastest Avg Pit</div></div>
+    </div>
+</div>
+
+<!-- SECTION 1: ETL Pipeline -->
+<section class="fade-up">
+    <div class="section-label">// Data Pipeline</div>
+    <h2 class="section-title">ETL Architecture</h2>
+    <p class="prose" style="margin-bottom:1.2rem;">Race data was fragmented across 20 individual files — each race had a separate pit stop CSV and results XLSX with inconsistent column names, mixed date formats, and no linking keys. Built a repeatable Tableau Prep flow that unions all sources, standardizes schemas, handles outliers, and engineers new calculated fields like Total Jack Time.</p>
+    <div class="pipeline">
+        <div class="pipe-step">
+            <div class="step-num">Step 01</div>
+            <div class="step-title">Ingest</div>
+            <div class="step-desc">10 CSVs + 10 XLSXs wildcard union</div>
+        </div>
+        <span class="pipe-arrow">→</span>
+        <div class="pipe-step">
+            <div class="step-num">Step 02</div>
+            <div class="step-title">Clean</div>
+            <div class="step-desc">Standardize headers, fix types, handle nulls</div>
+        </div>
+        <span class="pipe-arrow">→</span>
+        <div class="pipe-step">
+            <div class="step-num">Step 03</div>
+            <div class="step-title">Transform</div>
+            <div class="step-desc">Calculate fields, normalize dates, composite keys</div>
+        </div>
+        <span class="pipe-arrow">→</span>
+        <div class="pipe-step">
+            <div class="step-num">Step 04</div>
+            <div class="step-title">Output</div>
+            <div class="step-desc">2 combined XLSX → Tableau dashboards</div>
+        </div>
+    </div>
+
+    <div class="cards cards-2" style="margin-top:1.5rem;">
+        <div>
+            <h3 style="color:var(--text-heading); font-size:1rem; margin-bottom:.4rem;">Pit Data — 1,575 rows × 20 cols</h3>
+            <div class="schema-block">
+                <pre><span class="col-name">Car Number</span>      <span class="col-type">INT</span>
+<span class="col-name">Lap</span>              <span class="col-type">INT</span>
+<span class="col-name">Road Time</span>        <span class="col-type">FLOAT</span>  — entering pit road
+<span class="col-name">Stop Time</span>        <span class="col-type">FLOAT</span>  — stationary in box
+<span class="col-name">Other Stop Time</span>  <span class="col-type">FLOAT</span>  ★ calculated
+<span class="col-name">Tires</span>            <span class="col-type">INT</span>    — 0, 2, or 4
+<span class="col-name">Total Jack Time</span>  <span class="col-type">FLOAT</span>  ★ calculated
+<span class="col-name">Total Time</span>       <span class="col-type">FLOAT</span>  — full pit duration
+<span class="col-name">Track / Date</span>     <span class="col-type">STRING / DATE</span></pre>
+            </div>
+        </div>
+        <div>
+            <h3 style="color:var(--text-heading); font-size:1rem; margin-bottom:.4rem;">Results — 384 rows × 15 cols</h3>
+            <div class="schema-block">
+                <pre><span class="col-name">Finishing Pos</span>    <span class="col-type">INT</span>
+<span class="col-name">Driver</span>           <span class="col-type">STRING</span>
+<span class="col-name">Car Number</span>       <span class="col-type">INT</span>    — join key
+<span class="col-name">Manufacturer</span>     <span class="col-type">STRING</span> — Toyota/Ford/Chevy
+<span class="col-name">Laps / Start</span>     <span class="col-type">INT</span>
+<span class="col-name">Led</span>              <span class="col-type">INT</span>    — laps led
+<span class="col-name">PTS / Bonus</span>      <span class="col-type">INT</span>    — points earned
+<span class="col-name">Penalty Points</span>   <span class="col-type">INT</span>
+<span class="col-name">Track / Date</span>     <span class="col-type">STRING / DATE</span></pre>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 2: Performance Rankings -->
+<section class="fade-up">
+    <div class="section-label">// Performance</div>
+    <h2 class="section-title">Crew Rankings &amp; Track Analysis</h2>
+
+    <div class="cards cards-2" style="margin-bottom:1.5rem;">
+        <div>
+            <h3 style="color:var(--text-heading); font-size:1rem; margin-bottom:.6rem;">🏆 Top 5 Fastest Pit Crews</h3>
+            <table class="data-table">
+                <thead><tr><th>#</th><th>Car</th><th>Avg Total Time</th></tr></thead>
+                <tbody>
+                    <tr><td class="rank">1</td><td>Car #12</td><td class="metric">38.4s</td></tr>
+                    <tr><td class="rank">2</td><td>Car #41</td><td class="metric">39.3s</td></tr>
+                    <tr><td class="rank">3</td><td>Car #17</td><td class="metric">40.6s</td></tr>
+                    <tr><td class="rank">4</td><td>Car #42</td><td class="metric">41.3s</td></tr>
+                    <tr><td class="rank">5</td><td>Car #36</td><td class="metric">41.8s</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h3 style="color:var(--text-heading); font-size:1rem; margin-bottom:.6rem;">🏁 Top 5 Drivers by Avg Finish</h3>
+            <table class="data-table">
+                <thead><tr><th>#</th><th>Driver</th><th>Avg Finish</th></tr></thead>
+                <tbody>
+                    <tr><td class="rank">1</td><td>Kyle Busch</td><td class="metric">8.5</td></tr>
+                    <tr><td class="rank">2</td><td>Kurt Busch</td><td class="metric">9.6</td></tr>
+                    <tr><td class="rank">3</td><td>Brad Keselowski</td><td class="metric">10.0</td></tr>
+                    <tr><td class="rank">4</td><td>Erik Jones</td><td class="metric">10.8</td></tr>
+                    <tr><td class="rank">5</td><td>Alex Bowman</td><td class="metric">11.3</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <h3 style="color:var(--text-heading); font-size:1rem; margin-top:2rem; margin-bottom:.4rem;">Average Pit Time by Track</h3>
+    <div class="cat-bar-wrap">
+        <div class="cat-row"><span class="cat-name">Watkins Glen</span><div class="cat-bar-bg"><div class="cat-bar" style="width:100%"><span>55.3s</span></div></div><span class="cat-pct">110</span></div>
+        <div class="cat-row"><span class="cat-name">Daytona</span><div class="cat-bar-bg"><div class="cat-bar" style="width:89.1%"><span>49.3s</span></div></div><span class="cat-pct">257</span></div>
+        <div class="cat-row"><span class="cat-name">Talladega</span><div class="cat-bar-bg"><div class="cat-bar" style="width:85.2%"><span>47.1s</span></div></div><span class="cat-pct">272</span></div>
+        <div class="cat-row"><span class="cat-name">Atlanta</span><div class="cat-bar-bg"><div class="cat-bar" style="width:83%"><span>45.9s</span></div></div><span class="cat-pct">213</span></div>
+        <div class="cat-row"><span class="cat-name">Kansas</span><div class="cat-bar-bg"><div class="cat-bar" style="width:81.6%"><span>45.1s</span></div></div><span class="cat-pct">261</span></div>
+        <div class="cat-row"><span class="cat-name">Pocono</span><div class="cat-bar-bg"><div class="cat-bar" style="width:80.7%"><span>44.6s</span></div></div><span class="cat-pct">227</span></div>
+        <div class="cat-row"><span class="cat-name">Homestead</span><div class="cat-bar-bg"><div class="cat-bar" style="width:78.8%"><span>43.6s</span></div></div><span class="cat-pct">219</span></div>
+    </div>
+
+    <h3 style="color:var(--text-heading); font-size:1rem; margin-top:2rem; margin-bottom:.4rem;">Tire Strategy Breakdown</h3>
+    <div class="cat-bar-wrap">
+        <div class="cat-row"><span class="cat-name">4-Tire</span><div class="cat-bar-bg"><div class="cat-bar" style="width:72.6%"><span>1,143 stops</span></div></div><span class="cat-pct">72.6%</span></div>
+        <div class="cat-row"><span class="cat-name">0-Tire</span><div class="cat-bar-bg"><div class="cat-bar" style="width:19%"><span>300</span></div></div><span class="cat-pct">19.0%</span></div>
+        <div class="cat-row"><span class="cat-name">2-Tire</span><div class="cat-bar-bg"><div class="cat-bar" style="width:8.4%"><span>132</span></div></div><span class="cat-pct">8.4%</span></div>
+    </div>
+</section>
+
+<!-- SECTION 3: Key Findings -->
+<section class="fade-up">
+    <div class="section-label">// Key Findings</div>
+    <h2 class="section-title">Insights &amp; Outcomes</h2>
+    <div class="cards cards-2">
+        <div class="card">
+            <h3>18.4s Crew Performance Gap</h3>
+            <p>The fastest crew (Car #12 at 38.4s) outperformed the slowest (Car #43 at 56.8s) by 18.4 seconds per stop — potentially costing 2+ positions per pit cycle.</p>
+        </div>
+        <div class="card">
+            <h3>Track Type Drives Pit Time</h3>
+            <p>Road courses (Watkins Glen, 55.3s) averaged 27% slower pit times than ovals (Homestead, 43.6s), reflecting different pit lane configurations.</p>
+        </div>
+        <div class="card">
+            <h3>20 → 2 File Consolidation</h3>
+            <p>Automated Tableau Prep flow eliminated manual copy-paste workflows, engineered composite join keys (Race # + Car #), and created calculated fields for deeper analysis.</p>
+        </div>
+        <div class="card">
+            <h3>Manufacturer Parity</h3>
+            <p>Wins split nearly evenly — Chevrolet (4), Toyota (3), Ford (3) — despite Ford and Chevy having 2.7× more entries than Toyota.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

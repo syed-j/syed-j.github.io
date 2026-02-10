@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sports Fan Segmentation Analysis | Syed Ijtaba Jafri</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-card: #141c2e;
+            --bg-card-hover: #1a2540;
+            --cyan: #06d6a0;
+            --cyan-glow: rgba(6, 214, 160, 0.15);
+            --teal: #0ccbb4;
+            --text-primary: #e8edf5;
+            --text-secondary: #8b97b0;
+            --text-muted: #5a6680;
+            --border: rgba(255, 255, 255, 0.06);
+            --gradient-cyan: linear-gradient(135deg, #06d6a0, #0ccbb4, #00bfff);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1.25rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 14, 23, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--cyan);
+            letter-spacing: 1px;
+        }
+        .logo span { color: var(--text-secondary); }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: capitalize;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover { color: var(--cyan); }
+
+        /* Hero Banner */
+        .project-hero {
+            padding: 8rem 2.5rem 4rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--cyan);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            transition: opacity 0.3s;
+        }
+        .back-link:hover { opacity: 0.7; }
+
+        .project-hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            background: var(--gradient-cyan);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-hero .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            border: 1px solid rgba(6, 214, 160, 0.25);
+            color: var(--cyan);
+            background: rgba(6, 214, 160, 0.06);
+            letter-spacing: 0.5px;
+        }
+
+        /* Stats Row */
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--cyan);
+        }
+
+        .stat-card .label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        /* Sections */
+        .section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 2.5rem;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--cyan);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .section p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            max-width: 800px;
+        }
+
+        /* Divider */
+        .divider {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2.5rem;
+        }
+        .divider hr {
+            border: none;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Phase Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--cyan), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 6px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            border: 2px solid var(--cyan);
+            z-index: 1;
+        }
+
+        .timeline-item h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .timeline-item .week {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--cyan);
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.75rem;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .info-card:hover {
+            border-color: rgba(6, 214, 160, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .info-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .info-card .card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .info-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        /* KPI Grid */
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient-cyan);
+        }
+
+        .kpi-card h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--cyan);
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-card .kpi-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .kpi-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        .kpi-card .formula {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* Persona Cards */
+        .persona-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .persona-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.75rem;
+            transition: border-color 0.3s;
+        }
+        .persona-card:hover { border-color: rgba(6, 214, 160, 0.2); }
+
+        .persona-card .persona-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 0.15rem;
+        }
+        .persona-card .persona-type {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--cyan);
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+        }
+
+        .persona-card .trait {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.4rem 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.85rem;
+        }
+        .persona-card .trait:last-child { border-bottom: none; }
+        .persona-card .trait span:first-child { color: var(--text-secondary); }
+        .persona-card .trait span:last-child { color: var(--text-primary); font-weight: 500; }
+
+        /* Data Sources Table */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .data-table th {
+            text-align: left;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: var(--cyan);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(6, 214, 160, 0.15);
+            text-transform: uppercase;
+        }
+
+        .data-table td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+        .data-table td:first-child { color: var(--text-primary); font-weight: 500; }
+
+        .data-table tr:hover td { background: rgba(6, 214, 160, 0.03); }
+
+        /* Results highlights */
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, rgba(6, 214, 160, 0.08), rgba(0, 191, 255, 0.05));
+            border: 1px solid rgba(6, 214, 160, 0.15);
+            border-radius: 14px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .result-card .big-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--cyan);
+        }
+
+        .result-card .result-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* AI Section */
+        .ai-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .ai-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.75rem;
+        }
+
+        .ai-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .ai-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-item {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            padding: 0.5rem 1.1rem;
+            border-radius: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            transition: border-color 0.3s;
+        }
+        .tech-item:hover { border-color: var(--cyan); }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        /* Animations */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-links { gap: 1.5rem; }
+            .nav-links a { font-size: 0.75rem; }
+            .project-hero { padding: 7rem 1.5rem 3rem; }
+            .section { padding: 2rem 1.5rem; }
+            .divider { padding: 0 1.5rem; }
+            .project-hero h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+    <div class="logo">&lt;DATA <span>/&gt;</span></div>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- Hero -->
+<section class="project-hero">
+    <a href="index.html#projects" class="back-link">← Back to Projects</a>
+    <h1>Sports Fan Segmentation Analysis</h1>
+    <p class="subtitle">A semester-long data analytics capstone for USF Athletics — integrating Ticketmaster sales, Fanatics merchandise, and Qualtrics survey data to build fan personas, KPI dashboards, and an AI-powered engagement strategy.</p>
+
+    <div class="tag-row">
+        <span class="tag">MySQL</span>
+        <span class="tag">Python</span>
+        <span class="tag">Excel</span>
+        <span class="tag">Tableau</span>
+        <span class="tag">OpenAI API</span>
+        <span class="tag">Gamma</span>
+        <span class="tag">Agile / Scrum</span>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="number">3</div>
+            <div class="label">Data Sources Unified</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">1M+</div>
+            <div class="label">Fan Records Analyzed</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">4</div>
+            <div class="label">Fan Personas Created</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">30%</div>
+            <div class="label">Engagement Improvement</div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- Overview -->
+<section class="section fade-up">
+    <div class="section-label">// Overview</div>
+    <h2>The Challenge</h2>
+    <p>USF Athletics lacked a unified view of its fan base. Ticket sales, merchandise purchases, and survey feedback lived in separate silos with no way to understand who fans are, what drives them, or how to convert casual attendees into loyal supporters.</p>
+    <p>Students loved the game experience (rating it 4.6/5), but pre-game friction — particularly venue entry traffic, which scored only 3.03/5 — was hindering repeat attendance. The core question: how do you turn a first-time visitor into a season ticket holder?</p>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- Data Sources -->
+<section class="section fade-up">
+    <div class="section-label">// Data Foundation</div>
+    <h2>Three Data Sources, One Truth</h2>
+    <p>The project began by ingesting and cleaning data from three distinct platforms, then joining them on a shared geographic key (city) to create a unified fan dataset.</p>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Source</th>
+                <th>Records</th>
+                <th>Key Fields</th>
+                <th>Cleaning Applied</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Fanatics (Merchandise)</td>
+                <td>200K+ orders</td>
+                <td>Order ID, Product, Size, City, Price</td>
+                <td>Removed invalid sizes (e.g. "$50", "13 Pro Max"), nulls, duplicates</td>
+            </tr>
+            <tr>
+                <td>Ticketmaster (Sales & Attendance)</td>
+                <td>42,500 attendees</td>
+                <td>Account ID, Event Date, City, State, % Attended</td>
+                <td>Dropped missing acct_id/city/state, converted dates to datetime</td>
+            </tr>
+            <tr>
+                <td>Qualtrics (Post-Game Survey)</td>
+                <td>1,000+ responses</td>
+                <td>Satisfaction scores, seat location, traffic rating</td>
+                <td>Renamed ambiguous columns to descriptive labels</td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- Process / Timeline -->
+<section class="section fade-up">
+    <div class="section-label">// Process</div>
+    <h2>Project Phases</h2>
+    <p>The project followed an Agile framework across two 4-week sprints, with weekly deliverables and iterative stakeholder feedback.</p>
+
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="week">WEEKS 1–3 · RESEARCH & PERSONAS</div>
+            <h3>Fan Persona Development</h3>
+            <p>Analyzed Florida DMA demographics (Esri) and USF fan survey data (Vision Insights) to create data-backed personas. Identified four distinct fan segments based on spending behavior, attendance frequency, geography, and engagement channel preferences.</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="week">WEEKS 4–6 · DATA PREPARATION</div>
+            <h3>Data Cleaning & Integration</h3>
+            <p>Imported all three datasets into SQLite using DBeaver. Cleaned invalid entries, resolved duplicate Order IDs, standardized date formats, and performed a JOIN on city to link merchandise buyers with ticket holders. Created the unified dataset powering all downstream analysis.</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="week">WEEKS 7–8 · AGILE PLANNING</div>
+            <h3>Sprint Planning & KPI Definition</h3>
+            <p>Defined SMART goals: +8% attendance growth, +5% season-ticket renewal, +10% merchandise conversion. Built an Agile project plan with two 4-week sprints, clear acceptance criteria, and risk mitigation strategies for data gaps and privacy compliance.</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="week">WEEKS 9–12 · SPRINT 1</div>
+            <h3>Dashboard MVP & KPI Visualization</h3>
+            <p>Built an interactive dashboard with three core KPIs: Average Spend Per Fan Segment, Attendee Retention Funnel (42,500 → 15,725 returners → 6,800 die-hards → 2,975 season members), and Geographic Penetration across 10+ states. Integrated an OpenAI-powered "Generate Persona Insights" button.</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="week">WEEKS 13–16 · SPRINT 2</div>
+            <h3>AI Chatbot & Final Presentation</h3>
+            <p>Prototyped a Student Gameday Assistant Chatbot designed for GoUSFBulls.com — answering parking questions, recommending arrival times, delivering student promo codes, and collecting post-game NPS feedback. Compared Microsoft Azure vs. Satisfi Labs frameworks and recommended a hybrid approach.</p>
+        </div>
+    </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- Fan Personas -->
+<section class="section fade-up">
+    <div class="section-label">// Segmentation</div>
+    <h2>Fan Personas</h2>
+    <p>Four data-driven personas emerged from the analysis, each with distinct behaviors, spending patterns, and engagement strategies.</p>
+
+    <div class="persona-grid">
+        <div class="persona-card">
+            <div class="persona-name">🔥 Die-Hard Fan</div>
+            <div class="persona-type">HIGH-VALUE LOYALIST</div>
+            <div class="trait"><span>Avg. Spend</span><span>$225</span></div>
+            <div class="trait"><span>Attendance</span><span>3+ games/season</span></div>
+            <div class="trait"><span>Behavior</span><span>Season tickets, premium merch</span></div>
+            <div class="trait"><span>Strategy</span><span>Retention & upsell</span></div>
+        </div>
+
+        <div class="persona-card">
+            <div class="persona-name">🎉 Weekend Warrior</div>
+            <div class="persona-type">SOCIAL STUDENT FAN</div>
+            <div class="trait"><span>Age Range</span><span>18–24</span></div>
+            <div class="trait"><span>Motivation</span><span>Social bonding, rivalry games</span></div>
+            <div class="trait"><span>Sensitivity</span><span>Budget ≤ $25/event</span></div>
+            <div class="trait"><span>Strategy</span><span>Student bundles, shuttle promos</span></div>
+        </div>
+
+        <div class="persona-card">
+            <div class="persona-name">✈️ Out-of-Towner</div>
+            <div class="persona-type">REGIONAL SUPPORTER</div>
+            <div class="trait"><span>Avg. Spend</span><span>$140</span></div>
+            <div class="trait"><span>Top States</span><span>GA, NC, SC, NY</span></div>
+            <div class="trait"><span>Behavior</span><span>Travel for big games + merch</span></div>
+            <div class="trait"><span>Strategy</span><span>Travel packages, geo-targeting</span></div>
+        </div>
+
+        <div class="persona-card">
+            <div class="persona-name">👋 Casual Fan</div>
+            <div class="persona-type">CONVERSION OPPORTUNITY</div>
+            <div class="trait"><span>Avg. Spend</span><span>$75</span></div>
+            <div class="trait"><span>Attendance</span><span>1–2 games/season</span></div>
+            <div class="trait"><span>Behavior</span><span>Walk-up tickets, no merch</span></div>
+            <div class="trait"><span>Strategy</span><span>First-to-repeat conversion</span></div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- KPIs -->
+<section class="section fade-up">
+    <div class="section-label">// Analytics</div>
+    <h2>Key Performance Indicators</h2>
+    <p>Three KPIs were defined to measure fan engagement across financial value, retention, and geographic reach.</p>
+
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <h4>KPI 1</h4>
+            <div class="kpi-name">Average Spend Per Fan Segment</div>
+            <p>Quantifies the financial value of different fan segments to identify high-value groups and growth opportunities. Die-Hard fans average $225 vs. $75 for Casual — a 3x revenue gap driving targeted strategy.</p>
+            <div class="formula">(Total Ticket Price + Total Merch Price) / Unique Fans in Segment</div>
+        </div>
+
+        <div class="kpi-card">
+            <h4>KPI 2</h4>
+            <div class="kpi-name">Attendee Retention Funnel</div>
+            <p>Tracks the journey from first-time attendee to season ticket member. Of 42,500 total 2023 attendees, 37% returned for a 2nd game, 16% became die-hard (3+ games), and 7% converted to season tickets.</p>
+            <div class="formula">(First-Time Attendees Who Return) / (Total First-Time Attendees)</div>
+        </div>
+
+        <div class="kpi-card">
+            <h4>KPI 3</h4>
+            <div class="kpi-name">Geographic Penetration</div>
+            <p>Measures marketing effectiveness across regions and identifies "cold spots." Georgia led out-of-state fans with 1,800+ combined ticket + merch buyers, followed by NC and SC.</p>
+            <div class="formula">(Zip Codes with Sales) / (Total Target Market Zip Codes)</div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- AI Component -->
+<section class="section fade-up">
+    <div class="section-label">// AI Integration</div>
+    <h2>AI-Powered Engagement</h2>
+    <p>The project incorporated AI at two levels: auto-generated dashboard insights and a proposed conversational chatbot for students.</p>
+
+    <div class="ai-features">
+        <div class="ai-card">
+            <h4>📊 Dashboard AI Insights</h4>
+            <p>Integrated an OpenAI API-powered "Generate Persona Insights" button that produces real-time narrative summaries of KPI trends, marketing recommendations, and anomaly callouts — letting non-technical staff extract actionable intelligence without writing queries.</p>
+        </div>
+
+        <div class="ai-card">
+            <h4>💬 Student Gameday Chatbot</h4>
+            <p>Designed a conversational AI assistant for GoUSFBulls.com that answers arrival/parking questions in real-time, recommends optimal arrival windows, delivers student promo codes, and collects post-game NPS feedback. Projected impact: -20% traffic complaints, +10% repeat attendance, +15% promo conversion.</p>
+        </div>
+
+        <div class="ai-card">
+            <h4>🔧 Framework Comparison</h4>
+            <p>Evaluated Microsoft Azure (Copilot Studio + Cognitive Search + Fabric) vs. Satisfi Labs (Custom LLM + Ticketing APIs). Recommended a hybrid approach: Azure backend for scalable data management, Satisfi frontend for sports-specific conversational AI.</p>
+        </div>
+    </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- Results -->
+<section class="section fade-up">
+    <div class="section-label">// Impact</div>
+    <h2>Results & Projected Outcomes</h2>
+
+    <div class="results-grid">
+        <div class="result-card">
+            <div class="big-num">42.5K</div>
+            <div class="result-label">Fans Profiled & Segmented</div>
+        </div>
+        <div class="result-card">
+            <div class="big-num">4</div>
+            <div class="result-label">Data-Driven Personas</div>
+        </div>
+        <div class="result-card">
+            <div class="big-num">+30%</div>
+            <div class="result-label">Engagement Improvement</div>
+        </div>
+        <div class="result-card">
+            <div class="big-num">3</div>
+            <div class="result-label">Interactive KPI Dashboards</div>
+        </div>
+        <div class="result-card">
+            <div class="big-num">10+</div>
+            <div class="result-label">States in Geographic Analysis</div>
+        </div>
+        <div class="result-card">
+            <div class="big-num">16</div>
+            <div class="result-label">Weeks Start-to-Finish</div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- Tools -->
+<section class="section fade-up">
+    <div class="section-label">// Tech Stack</div>
+    <h2>Tools & Technologies</h2>
+
+    <div class="tech-stack">
+        <span class="tech-item">MySQL</span>
+        <span class="tech-item">Python</span>
+        <span class="tech-item">Excel</span>
+        <span class="tech-item">Tableau</span>
+        <span class="tech-item">OpenAI API</span>
+        <span class="tech-item">Gamma (Presentations)</span>
+        <span class="tech-item">Agile / Scrum</span>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>&lt;DATA /&gt; · Syed Ijtaba Jafri · 2025</p>
+</footer>
+
+<script>
+// Scroll fade-in animations
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

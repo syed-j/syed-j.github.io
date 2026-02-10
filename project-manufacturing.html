@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KAT Manufacturing Sales Dashboard | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-card: #141c2e;
+            --cyan: #06d6a0;
+            --cyan-dim: rgba(6,214,160,0.12);
+            --text-primary: #e0e0e0;
+            --text-secondary: #8892a4;
+            --text-heading: #ffffff;
+            --border-color: rgba(6,214,160,0.15);
+            --gradient-cyan: linear-gradient(135deg, #06d6a0, #00b4d8);
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-body: 'Outfit', sans-serif;
+        }
+        body { background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-body); line-height: 1.7; overflow-x: hidden; }
+        a { color: var(--cyan); text-decoration: none; }
+        .back-link { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--font-mono); font-size: .95rem; padding: 1.5rem 2rem; color: var(--cyan); }
+        .back-link:hover { opacity: .8; }
+
+        .hero { max-width: 1100px; margin: 0 auto; padding: 1rem 2rem 3rem; }
+        .hero h1 { font-family: var(--font-body); font-weight: 700; font-size: clamp(2.2rem, 5vw, 3.4rem); background: var(--gradient-cyan); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+        .hero .subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 780px; margin-bottom: 1.8rem; line-height: 1.8; }
+        .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2rem; }
+        .tag { font-family: var(--font-mono); font-size: .8rem; padding: .4rem .9rem; border: 1px solid var(--border-color); border-radius: 999px; color: var(--cyan); }
+        .stat-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap: .8rem; }
+        .stat-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem; }
+        .stat-card .num { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 700; color: var(--cyan); }
+        .stat-card .label { font-size: .82rem; color: var(--text-secondary); margin-top: .2rem; }
+
+        section { max-width: 1100px; margin: 0 auto; padding: 2.5rem 2rem; }
+        .section-label { font-family: var(--font-mono); font-size: .82rem; color: var(--cyan); letter-spacing: 3px; text-transform: uppercase; margin-bottom: .5rem; }
+        .section-title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--text-heading); margin-bottom: 1rem; }
+        .prose { color: var(--text-secondary); line-height: 1.8; max-width: 800px; }
+
+        .cards { display: grid; gap: 1rem; margin-top: 1.2rem; }
+        .cards-2 { grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); }
+        .cards-3 { grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); }
+        .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.4rem; }
+        .card h3 { font-size: 1.05rem; font-weight: 600; color: var(--text-heading); margin-bottom: .4rem; }
+        .card p { font-size: .88rem; color: var(--text-secondary); line-height: 1.65; }
+
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: .88rem; }
+        .data-table th { text-align: left; padding: .7rem 1rem; background: var(--bg-card); color: var(--cyan); font-family: var(--font-mono); font-size: .78rem; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid var(--border-color); }
+        .data-table td { padding: .65rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-primary); }
+        .data-table tr:hover td { background: rgba(6,214,160,0.03); }
+        .data-table .rank { font-family: var(--font-mono); color: var(--cyan); font-weight: 600; }
+        .data-table .metric { font-family: var(--font-mono); color: var(--text-heading); }
+
+        .cat-bar-wrap { margin-top: 1rem; }
+        .cat-row { display: flex; align-items: center; gap: 1rem; margin-bottom: .6rem; }
+        .cat-name { font-family: var(--font-mono); font-size: .82rem; color: var(--text-primary); width: 110px; flex-shrink: 0; }
+        .cat-bar-bg { flex: 1; height: 28px; background: rgba(255,255,255,0.04); border-radius: 6px; overflow: hidden; }
+        .cat-bar { height: 100%; background: var(--gradient-cyan); border-radius: 6px; display: flex; align-items: center; padding-left: .6rem; }
+        .cat-bar span { font-family: var(--font-mono); font-size: .72rem; color: var(--bg-primary); font-weight: 600; }
+        .cat-pct { font-family: var(--font-mono); font-size: .78rem; color: var(--text-secondary); width: 55px; text-align: right; flex-shrink: 0; }
+
+        .fade-up { opacity: 0; transform: translateY(25px); transition: all .5s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.8rem; }
+            .stat-row { grid-template-columns: repeat(2, 1fr); }
+            .cat-name { width: 80px; font-size: .72rem; }
+        }
+    </style>
+</head>
+<body>
+<a class="back-link" href="index.html">← Back to Portfolio</a>
+
+<div class="hero">
+    <h1>KAT Manufacturing Sales Dashboard</h1>
+    <p class="subtitle">Built a 7-worksheet Tableau dashboard analyzing $100.6M in sales revenue across 713 customers, 6 global divisions, and 10+ product lines — tracking quarterly performance from 2019–2021 to identify growth drivers and regional sales trends.</p>
+    <div class="tags">
+        <span class="tag">Tableau</span>
+        <span class="tag">Excel</span>
+        <span class="tag">Data Visualization</span>
+        <span class="tag">Sales Analytics</span>
+        <span class="tag">Manufacturing</span>
+    </div>
+    <div class="stat-row">
+        <div class="stat-card"><div class="num">$100.6M</div><div class="label">Total Revenue</div></div>
+        <div class="stat-card"><div class="num">7,284</div><div class="label">Sales Records</div></div>
+        <div class="stat-card"><div class="num">713</div><div class="label">Customers</div></div>
+        <div class="stat-card"><div class="num">6</div><div class="label">Global Divisions</div></div>
+        <div class="stat-card"><div class="num">67%</div><div class="label">3-Year Growth</div></div>
+    </div>
+</div>
+
+<!-- SECTION 1: Dashboard Worksheets -->
+<section class="fade-up">
+    <div class="section-label">// Dashboard</div>
+    <h2 class="section-title">Tableau Worksheets</h2>
+    <div class="cards cards-3">
+        <div class="card">
+            <h3>Revenue by Category</h3>
+            <p>Broke down $100.6M across 4 categories — Materials Processing leads at 47.3%, followed by Govt/R&D (25.2%) and Telecom (20.4%).</p>
+        </div>
+        <div class="card">
+            <h3>Revenue by Year</h3>
+            <p>Tracked year-over-year growth from $25.9M (2019) to $43.4M (2021) — a 67% increase driven by post-pandemic manufacturing demand.</p>
+        </div>
+        <div class="card">
+            <h3>Sales by Division</h3>
+            <p>Compared performance across 6 global divisions: Germany (44.2%), US (36.0%), UK (8.5%), India, Russia, and Korea.</p>
+        </div>
+        <div class="card">
+            <h3>Sales by Division Map</h3>
+            <p>Geographic visualization highlighting revenue concentration in Germany and the US, together accounting for 80.2% of total sales.</p>
+        </div>
+        <div class="card">
+            <h3>Sales by Product Line</h3>
+            <p>Analyzed 10+ product lines — Single Channel EDFA led at $15.9M, followed by Low Yt ($12.2M) and Er Laser ($8.5M).</p>
+        </div>
+        <div class="card">
+            <h3>Top Customers in Sales</h3>
+            <p>Ranked 713 customers by revenue contribution, identifying key accounts driving the majority of sales volume.</p>
+        </div>
+        <div class="card">
+            <h3>Sales by Quarter &amp; Year</h3>
+            <p>Quarterly trend analysis revealing seasonal patterns and consistent growth trajectory across 12 quarters.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 2: Revenue Breakdown -->
+<section class="fade-up">
+    <div class="section-label">// Revenue Breakdown</div>
+    <h2 class="section-title">Division &amp; Category Performance</h2>
+
+    <h3 style="color:var(--text-heading); font-size:1rem; margin-bottom:.4rem;">Revenue by Division</h3>
+    <div class="cat-bar-wrap" style="margin-bottom:2rem;">
+        <div class="cat-row"><span class="cat-name">Germany</span><div class="cat-bar-bg"><div class="cat-bar" style="width:100%"><span>$44.5M</span></div></div><span class="cat-pct">44.2%</span></div>
+        <div class="cat-row"><span class="cat-name">United States</span><div class="cat-bar-bg"><div class="cat-bar" style="width:81.3%"><span>$36.2M</span></div></div><span class="cat-pct">36.0%</span></div>
+        <div class="cat-row"><span class="cat-name">United Kingdom</span><div class="cat-bar-bg"><div class="cat-bar" style="width:19.2%"><span>$8.5M</span></div></div><span class="cat-pct">8.5%</span></div>
+        <div class="cat-row"><span class="cat-name">India</span><div class="cat-bar-bg"><div class="cat-bar" style="width:10.8%"><span>$4.8M</span></div></div><span class="cat-pct">4.8%</span></div>
+        <div class="cat-row"><span class="cat-name">Russia</span><div class="cat-bar-bg"><div class="cat-bar" style="width:9.4%"><span>$4.2M</span></div></div><span class="cat-pct">4.2%</span></div>
+        <div class="cat-row"><span class="cat-name">Korea</span><div class="cat-bar-bg"><div class="cat-bar" style="width:5.3%"><span>$2.3M</span></div></div><span class="cat-pct">2.3%</span></div>
+    </div>
+
+    <h3 style="color:var(--text-heading); font-size:1rem; margin-bottom:.4rem;">Revenue by Category</h3>
+    <div class="cat-bar-wrap" style="margin-bottom:2rem;">
+        <div class="cat-row"><span class="cat-name">Materials</span><div class="cat-bar-bg"><div class="cat-bar" style="width:100%"><span>$47.5M</span></div></div><span class="cat-pct">47.3%</span></div>
+        <div class="cat-row"><span class="cat-name">Govt / R&D</span><div class="cat-bar-bg"><div class="cat-bar" style="width:53.2%"><span>$25.3M</span></div></div><span class="cat-pct">25.2%</span></div>
+        <div class="cat-row"><span class="cat-name">Telecom</span><div class="cat-bar-bg"><div class="cat-bar" style="width:43.2%"><span>$20.5M</span></div></div><span class="cat-pct">20.4%</span></div>
+        <div class="cat-row"><span class="cat-name">Medical</span><div class="cat-bar-bg"><div class="cat-bar" style="width:15.2%"><span>$7.2M</span></div></div><span class="cat-pct">7.2%</span></div>
+    </div>
+
+    <h3 style="color:var(--text-heading); font-size:1rem; margin-bottom:.4rem;">Revenue by Year</h3>
+    <div class="cat-bar-wrap">
+        <div class="cat-row"><span class="cat-name">2019</span><div class="cat-bar-bg"><div class="cat-bar" style="width:59.8%"><span>$25.9M</span></div></div><span class="cat-pct">25.8%</span></div>
+        <div class="cat-row"><span class="cat-name">2020</span><div class="cat-bar-bg"><div class="cat-bar" style="width:72.1%"><span>$31.3M</span></div></div><span class="cat-pct">31.1%</span></div>
+        <div class="cat-row"><span class="cat-name">2021</span><div class="cat-bar-bg"><div class="cat-bar" style="width:100%"><span>$43.4M</span></div></div><span class="cat-pct">43.1%</span></div>
+    </div>
+</section>
+
+<!-- SECTION 3: Top Markets -->
+<section class="fade-up">
+    <div class="section-label">// Markets</div>
+    <h2 class="section-title">Top Markets &amp; Product Lines</h2>
+    <div class="cards cards-2">
+        <div>
+            <h3 style="color:var(--text-heading); font-size:1rem; margin-bottom:.6rem;">Top Markets by Revenue</h3>
+            <table class="data-table">
+                <thead><tr><th>#</th><th>Market</th><th>Revenue</th></tr></thead>
+                <tbody>
+                    <tr><td class="rank">1</td><td>General Manufacturing</td><td class="metric">$27.7M</td></tr>
+                    <tr><td class="rank">2</td><td>Research</td><td class="metric">$26.8M</td></tr>
+                    <tr><td class="rank">3</td><td>BB Access</td><td class="metric">$9.3M</td></tr>
+                    <tr><td class="rank">4</td><td>Aerospace</td><td class="metric">$7.2M</td></tr>
+                    <tr><td class="rank">5</td><td>Medical Device</td><td class="metric">$5.8M</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h3 style="color:var(--text-heading); font-size:1rem; margin-bottom:.6rem;">Top Product Lines by Revenue</h3>
+            <table class="data-table">
+                <thead><tr><th>#</th><th>Product Line</th><th>Revenue</th></tr></thead>
+                <tbody>
+                    <tr><td class="rank">1</td><td>Single Channel EDFA</td><td class="metric">$15.9M</td></tr>
+                    <tr><td class="rank">2</td><td>Low Yt (&lt;100)</td><td class="metric">$12.2M</td></tr>
+                    <tr><td class="rank">3</td><td>Er Laser</td><td class="metric">$8.5M</td></tr>
+                    <tr><td class="rank">4</td><td>Pulsed Yt</td><td class="metric">$7.7M</td></tr>
+                    <tr><td class="rank">5</td><td>Hi Yt (&gt;1 kW)</td><td class="metric">$6.7M</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 4: Key Findings -->
+<section class="fade-up">
+    <div class="section-label">// Key Findings</div>
+    <h2 class="section-title">Insights &amp; Outcomes</h2>
+    <div class="cards cards-2">
+        <div class="card">
+            <h3>67% Revenue Growth (2019–2021)</h3>
+            <p>Revenue surged from $25.9M to $43.4M over 3 years, with acceleration in 2021 (+39% YoY) driven by post-pandemic demand in materials processing and research markets.</p>
+        </div>
+        <div class="card">
+            <h3>Germany + US = 80% of Revenue</h3>
+            <p>Two divisions account for $80.7M of $100.6M total. The remaining 4 divisions (UK, India, Russia, Korea) collectively contribute just 19.8%, signaling heavy geographic concentration risk.</p>
+        </div>
+        <div class="card">
+            <h3>Materials Processing Dominates</h3>
+            <p>At $47.5M (47.3%), Materials Processing generates nearly half of all revenue — more than Telecom and Medical combined. General Manufacturing and Research are the top two end markets.</p>
+        </div>
+        <div class="card">
+            <h3>Medical Segment Underrepresented</h3>
+            <p>Medical accounts for only 7.2% ($7.2M) despite strong industry growth. This represents a potential expansion opportunity given the company's existing product capabilities.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>

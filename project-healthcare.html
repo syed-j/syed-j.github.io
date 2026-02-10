@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>State Healthcare Policy Analysis | Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-card: #141c2e;
+            --cyan: #06d6a0;
+            --cyan-dim: rgba(6,214,160,0.12);
+            --text-primary: #e0e0e0;
+            --text-secondary: #8892a4;
+            --text-heading: #ffffff;
+            --border-color: rgba(6,214,160,0.15);
+            --gradient-cyan: linear-gradient(135deg, #06d6a0, #00b4d8);
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-body: 'Outfit', sans-serif;
+        }
+        body { background: var(--bg-primary); color: var(--text-primary); font-family: var(--font-body); line-height: 1.7; overflow-x: hidden; }
+        a { color: var(--cyan); text-decoration: none; }
+        .back-link { display: inline-flex; align-items: center; gap: .5rem; font-family: var(--font-mono); font-size: .95rem; padding: 1.5rem 2rem; color: var(--cyan); }
+        .back-link:hover { opacity: .8; }
+
+        .hero { max-width: 1100px; margin: 0 auto; padding: 1rem 2rem 3rem; }
+        .hero h1 { font-family: var(--font-body); font-weight: 700; font-size: clamp(2.2rem, 5vw, 3.4rem); background: var(--gradient-cyan); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 1rem; }
+        .hero .subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 780px; margin-bottom: 1.8rem; line-height: 1.8; }
+        .tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-bottom: 2rem; }
+        .tag { font-family: var(--font-mono); font-size: .8rem; padding: .4rem .9rem; border: 1px solid var(--border-color); border-radius: 999px; color: var(--cyan); }
+        .stat-row { display: grid; grid-template-columns: repeat(auto-fit,minmax(150px,1fr)); gap: .8rem; }
+        .stat-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem; }
+        .stat-card .num { font-family: var(--font-mono); font-size: 1.5rem; font-weight: 700; color: var(--cyan); }
+        .stat-card .label { font-size: .82rem; color: var(--text-secondary); margin-top: .2rem; }
+
+        section { max-width: 1100px; margin: 0 auto; padding: 2.5rem 2rem; }
+        .section-label { font-family: var(--font-mono); font-size: .82rem; color: var(--cyan); letter-spacing: 3px; text-transform: uppercase; margin-bottom: .5rem; }
+        .section-title { font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; color: var(--text-heading); margin-bottom: 1rem; }
+        .prose { color: var(--text-secondary); line-height: 1.8; max-width: 800px; }
+
+        .cards { display: grid; gap: 1rem; margin-top: 1.2rem; }
+        .cards-2 { grid-template-columns: repeat(auto-fit,minmax(300px,1fr)); }
+        .cards-3 { grid-template-columns: repeat(auto-fit,minmax(260px,1fr)); }
+        .card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.4rem; }
+        .card h3 { font-size: 1.05rem; font-weight: 600; color: var(--text-heading); margin-bottom: .4rem; }
+        .card p { font-size: .88rem; color: var(--text-secondary); line-height: 1.65; }
+
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: .88rem; }
+        .data-table th { text-align: left; padding: .7rem 1rem; background: var(--bg-card); color: var(--cyan); font-family: var(--font-mono); font-size: .78rem; letter-spacing: 1px; text-transform: uppercase; border-bottom: 1px solid var(--border-color); }
+        .data-table td { padding: .65rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text-primary); }
+        .data-table tr:hover td { background: rgba(6,214,160,0.03); }
+        .data-table .rank { font-family: var(--font-mono); color: var(--cyan); font-weight: 600; }
+        .data-table .metric { font-family: var(--font-mono); color: var(--text-heading); }
+
+        .cat-bar-wrap { margin-top: 1rem; }
+        .cat-row { display: flex; align-items: center; gap: 1rem; margin-bottom: .6rem; }
+        .cat-name { font-family: var(--font-mono); font-size: .82rem; color: var(--text-primary); width: 70px; flex-shrink: 0; }
+        .cat-bar-bg { flex: 1; height: 28px; background: rgba(255,255,255,0.04); border-radius: 6px; overflow: hidden; }
+        .cat-bar { height: 100%; background: var(--gradient-cyan); border-radius: 6px; display: flex; align-items: center; padding-left: .6rem; }
+        .cat-bar span { font-family: var(--font-mono); font-size: .72rem; color: var(--bg-primary); font-weight: 600; }
+        .cat-pct { font-family: var(--font-mono); font-size: .78rem; color: var(--text-secondary); width: 55px; text-align: right; flex-shrink: 0; }
+
+        .policy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .6rem; margin-top: 1rem; }
+        .policy-item { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 10px; padding: .8rem 1rem; display: flex; justify-content: space-between; align-items: center; }
+        .policy-item .name { font-size: .84rem; color: var(--text-primary); }
+        .policy-item .count { font-family: var(--font-mono); font-size: .82rem; color: var(--cyan); font-weight: 600; }
+
+        .fade-up { opacity: 0; transform: translateY(25px); transition: all .5s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 1.8rem; }
+            .stat-row { grid-template-columns: repeat(2, 1fr); }
+            .cat-name { width: 55px; font-size: .72rem; }
+            .policy-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<a class="back-link" href="index.html">← Back to Portfolio</a>
+
+<div class="hero">
+    <h1>State Healthcare Policy Analysis</h1>
+    <p class="subtitle">Scored and compared 20 medical billing and patient protection policies across all 50 US states using Excel — revealing stark regional disparities in healthcare consumer protections, with a 12-point gap between the most and least protective states.</p>
+    <div class="tags">
+        <span class="tag">Excel</span>
+        <span class="tag">VLOOKUP</span>
+        <span class="tag">Pivot Tables</span>
+        <span class="tag">Data Analysis</span>
+        <span class="tag">Healthcare</span>
+    </div>
+    <div class="stat-row">
+        <div class="stat-card"><div class="num">50</div><div class="label">States Analyzed</div></div>
+        <div class="stat-card"><div class="num">20</div><div class="label">Policies Tracked</div></div>
+        <div class="stat-card"><div class="num">4</div><div class="label">Regions Compared</div></div>
+        <div class="stat-card"><div class="num">5.2</div><div class="label">Avg Policy Score</div></div>
+        <div class="stat-card"><div class="num">12pt</div><div class="label">Max Score Gap</div></div>
+    </div>
+</div>
+
+<!-- SECTION 1: Overview -->
+<section class="fade-up">
+    <div class="section-label">// Overview</div>
+    <h2 class="section-title">Project Scope</h2>
+    <p class="prose">Built a comprehensive Excel workbook analyzing how each of the 50 US states protects consumers on medical billing, debt collection, and healthcare access. Each state was scored on 20 binary/partial policies — from Medicaid expansion to surprise billing limits to wage garnishment restrictions — producing a composite "Total Policy Score." The workbook features VLOOKUP-powered state comparison tools, 3 pivot table analyses by region, and filtered views to isolate specific policy adoption patterns.</p>
+</section>
+
+<!-- SECTION 2: Regional Scores -->
+<section class="fade-up">
+    <div class="section-label">// Regional Analysis</div>
+    <h2 class="section-title">Policy Scores by Region</h2>
+
+    <div class="cat-bar-wrap" style="margin-bottom:2rem;">
+        <div class="cat-row"><span class="cat-name">East</span><div class="cat-bar-bg"><div class="cat-bar" style="width:100%"><span>avg 6.6</span></div></div><span class="cat-pct">13 states</span></div>
+        <div class="cat-row"><span class="cat-name">West</span><div class="cat-bar-bg"><div class="cat-bar" style="width:87.9%"><span>avg 5.8</span></div></div><span class="cat-pct">13 states</span></div>
+        <div class="cat-row"><span class="cat-name">Central</span><div class="cat-bar-bg"><div class="cat-bar" style="width:63.6%"><span>avg 4.2</span></div></div><span class="cat-pct">13 states</span></div>
+        <div class="cat-row"><span class="cat-name">South</span><div class="cat-bar-bg"><div class="cat-bar" style="width:62.1%"><span>avg 4.1</span></div></div><span class="cat-pct">11 states</span></div>
+    </div>
+
+    <div class="cards cards-2">
+        <div>
+            <h3 style="color:var(--text-heading); font-size:1rem; margin-bottom:.6rem;">🏆 Top 5 Most Protective</h3>
+            <table class="data-table">
+                <thead><tr><th>#</th><th>State</th><th>Region</th><th>Score</th></tr></thead>
+                <tbody>
+                    <tr><td class="rank">1</td><td>Maryland</td><td>East</td><td class="metric">14.0</td></tr>
+                    <tr><td class="rank">2</td><td>California</td><td>West</td><td class="metric">10.5</td></tr>
+                    <tr><td class="rank">3</td><td>Washington</td><td>West</td><td class="metric">9.0</td></tr>
+                    <tr><td class="rank">4</td><td>Colorado</td><td>West</td><td class="metric">8.5</td></tr>
+                    <tr><td class="rank">5</td><td>Connecticut</td><td>East</td><td class="metric">8.5</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <h3 style="color:var(--text-heading); font-size:1rem; margin-bottom:.6rem;">⚠️ Bottom 5 Least Protective</h3>
+            <table class="data-table">
+                <thead><tr><th>#</th><th>State</th><th>Region</th><th>Score</th></tr></thead>
+                <tbody>
+                    <tr><td class="rank">50</td><td>Tennessee</td><td>South</td><td class="metric">2.0</td></tr>
+                    <tr><td class="rank">49</td><td>Alaska</td><td>West</td><td class="metric">2.5</td></tr>
+                    <tr><td class="rank">48</td><td>South Dakota</td><td>Central</td><td class="metric">2.5</td></tr>
+                    <tr><td class="rank">47</td><td>Virginia</td><td>South</td><td class="metric">2.5</td></tr>
+                    <tr><td class="rank">46</td><td>Alabama</td><td>South</td><td class="metric">3.0</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 3: Policy Adoption -->
+<section class="fade-up">
+    <div class="section-label">// Policy Adoption</div>
+    <h2 class="section-title">How Many States Adopted Each Policy?</h2>
+
+    <div class="policy-grid">
+        <div class="policy-item"><span class="name">Expanded Medicaid</span><span class="count">37/50</span></div>
+        <div class="policy-item"><span class="name">Prohibit Arrest for Debt</span><span class="count">35/50</span></div>
+        <div class="policy-item"><span class="name">Accurate Itemized Bills</span><span class="count">30/50</span></div>
+        <div class="policy-item"><span class="name">Restrict Wage Garnish</span><span class="count">27/50</span></div>
+        <div class="policy-item"><span class="name">Limit Surprise Billing</span><span class="count">23/50</span></div>
+        <div class="policy-item"><span class="name">Retro Benefits for Debt</span><span class="count">21/50</span></div>
+        <div class="policy-item"><span class="name">Require Charity Care</span><span class="count">20/50</span></div>
+        <div class="policy-item"><span class="name">Restrict Care Denial</span><span class="count">20/50</span></div>
+        <div class="policy-item"><span class="name">Limit Low-Income Charges</span><span class="count">18/50</span></div>
+        <div class="policy-item"><span class="name">Limit Care Pricing</span><span class="count">16/50</span></div>
+        <div class="policy-item"><span class="name">Limit Interest Rates</span><span class="count">13/50</span></div>
+        <div class="policy-item"><span class="name">Billing Dispute Process</span><span class="count">8/50</span></div>
+        <div class="policy-item"><span class="name">Limit Legal Fees</span><span class="count">6/50</span></div>
+        <div class="policy-item"><span class="name">Disclose Collection Policy</span><span class="count">4/50</span></div>
+        <div class="policy-item"><span class="name">Offer Payment Plans</span><span class="count">4/50</span></div>
+        <div class="policy-item"><span class="name">Restrict Bank Seizure</span><span class="count">2/50</span></div>
+    </div>
+</section>
+
+<!-- SECTION 4: Excel Techniques -->
+<section class="fade-up">
+    <div class="section-label">// Excel Techniques</div>
+    <h2 class="section-title">Workbook Features</h2>
+    <div class="cards cards-3">
+        <div class="card">
+            <h3>VLOOKUP Comparisons</h3>
+            <p>Built a dynamic comparison tool — enter any two state codes and instantly see a side-by-side breakdown of all 20 policies with auto-populated names, regions, and scores.</p>
+        </div>
+        <div class="card">
+            <h3>3 Pivot Table Analyses</h3>
+            <p>Average policy score by region, state-level adoption of key policies (Medicaid, surprise billing, itemized bills), and filtered score rankings for selected states.</p>
+        </div>
+        <div class="card">
+            <h3>Filtered Views</h3>
+            <p>Three pre-built filter configurations for quick analysis — isolating states by region, by specific policy adoption, and by score thresholds.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SECTION 5: Key Findings -->
+<section class="fade-up">
+    <div class="section-label">// Key Findings</div>
+    <h2 class="section-title">Insights &amp; Outcomes</h2>
+    <div class="cards cards-2">
+        <div class="card">
+            <h3>East Leads, South Lags</h3>
+            <p>Eastern states averaged 6.6 policy score vs the South's 4.1 — a 61% gap. Maryland alone (14.0) scored nearly 3× the national average of 5.2, driven by strong billing transparency and debt protection laws.</p>
+        </div>
+        <div class="card">
+            <h3>Medicaid ≠ Full Protection</h3>
+            <p>While 37 states expanded Medicaid, only 4 require payment plans before collections and just 1 prohibits selling medical debt — showing expansion alone doesn't ensure consumer protection.</p>
+        </div>
+        <div class="card">
+            <h3>Debt Collection Blind Spot</h3>
+            <p>Only 2 states restrict bank account seizure for medical debt and 4 disclose their collection policies. The most common protections (Medicaid, arrest prohibition) leave financial enforcement largely unregulated.</p>
+        </div>
+        <div class="card">
+            <h3>12-Point Score Spread</h3>
+            <p>The gap between Maryland (14) and Tennessee (2) reveals vastly different levels of healthcare consumer protection — patients in the lowest-scoring states have minimal safeguards against aggressive medical billing.</p>
+        </div>
+    </div>
+</section>
+
+<script>
+const obs = new IntersectionObserver(entries => { entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }); }, { threshold: 0.1 });
+document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
