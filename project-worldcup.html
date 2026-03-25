@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 World Cup ML Predictor | Syed Ijtaba Jafri</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-primary: #0a0e17;
+            --bg-secondary: #111827;
+            --bg-card: #141c2e;
+            --bg-card-hover: #1a2540;
+            --cyan: #06d6a0;
+            --cyan-glow: rgba(6, 214, 160, 0.15);
+            --teal: #0ccbb4;
+            --text-primary: #e8edf5;
+            --text-secondary: #8b97b0;
+            --text-muted: #5a6680;
+            --border: rgba(255, 255, 255, 0.06);
+            --gradient-cyan: linear-gradient(135deg, #06d6a0, #0ccbb4, #00bfff);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.7;
+        }
+
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            padding: 1.25rem 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(10, 14, 23, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--cyan);
+            letter-spacing: 1px;
+        }
+        .logo span { color: var(--text-secondary); }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-transform: capitalize;
+            transition: color 0.3s ease;
+        }
+        .nav-links a:hover { color: var(--cyan); }
+
+        .project-hero {
+            padding: 8rem 2.5rem 4rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--cyan);
+            text-decoration: none;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            transition: opacity 0.3s;
+        }
+        .back-link:hover { opacity: 0.7; }
+
+        .project-hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1.15;
+            margin-bottom: 1rem;
+            background: var(--gradient-cyan);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .project-hero .subtitle {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 2rem;
+        }
+
+        .tag-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            border: 1px solid rgba(6, 214, 160, 0.25);
+            color: var(--cyan);
+            background: rgba(6, 214, 160, 0.06);
+            letter-spacing: 0.5px;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-card .number {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--cyan);
+        }
+
+        .stat-card .label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.3rem;
+        }
+
+        .section {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem 2.5rem;
+        }
+
+        .section-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--cyan);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .section h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .section p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            max-width: 800px;
+        }
+
+        .divider {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2.5rem;
+        }
+        .divider hr {
+            border: none;
+            border-top: 1px solid var(--border);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 8px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--cyan), transparent);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2.5rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.5rem;
+            top: 6px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            border: 2px solid var(--cyan);
+            z-index: 1;
+        }
+
+        .timeline-item h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+        }
+
+        .timeline-item .week {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--cyan);
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .timeline-item p {
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.75rem;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+        .info-card:hover {
+            border-color: rgba(6, 214, 160, 0.2);
+            transform: translateY(-3px);
+        }
+
+        .info-card h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .info-card .card-icon {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .info-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .kpi-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient-cyan);
+        }
+
+        .kpi-card h4 {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--cyan);
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .kpi-card .kpi-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .kpi-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        .kpi-card .formula {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-top: 0.75rem;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .result-card {
+            background: linear-gradient(135deg, rgba(6, 214, 160, 0.08), rgba(0, 191, 255, 0.05));
+            border: 1px solid rgba(6, 214, 160, 0.15);
+            border-radius: 14px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .result-card .big-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--cyan);
+        }
+
+        .result-card .result-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 0.25rem;
+        }
+
+        /* Prediction podium */
+        .podium-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.5rem;
+        }
+
+        .podium-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.5rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s, transform 0.3s;
+        }
+
+        .podium-card:hover {
+            border-color: rgba(6, 214, 160, 0.25);
+            transform: translateY(-4px);
+        }
+
+        .podium-card.gold { border-color: rgba(255, 215, 0, 0.3); }
+        .podium-card.silver { border-color: rgba(192, 192, 192, 0.3); }
+        .podium-card.bronze { border-color: rgba(205, 127, 50, 0.3); }
+
+        .podium-card .medal { font-size: 2rem; margin-bottom: 0.5rem; }
+
+        .podium-card .team-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .podium-card .win-pct {
+            font-size: 1.6rem;
+            font-weight: 800;
+            color: var(--cyan);
+        }
+
+        .podium-card .pct-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .data-table th {
+            text-align: left;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            color: var(--cyan);
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(6, 214, 160, 0.15);
+            text-transform: uppercase;
+        }
+
+        .data-table td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+        .data-table td:first-child { color: var(--text-primary); font-weight: 500; }
+        .data-table tr:hover td { background: rgba(6, 214, 160, 0.03); }
+
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .tech-item {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            padding: 0.5rem 1.1rem;
+            border-radius: 8px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            transition: border-color 0.3s;
+        }
+        .tech-item:hover { border-color: var(--cyan); }
+
+        /* Model comparison cards */
+        .model-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .model-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 1.75rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .model-card.winner {
+            border-color: rgba(6, 214, 160, 0.3);
+        }
+
+        .model-card.winner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+            background: var(--gradient-cyan);
+        }
+
+        .model-card .model-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .model-card .model-acc {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .model-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0;
+        }
+
+        .model-card .chosen-badge {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.6rem;
+            border-radius: 999px;
+            background: rgba(6, 214, 160, 0.1);
+            border: 1px solid rgba(6, 214, 160, 0.3);
+            color: var(--cyan);
+            letter-spacing: 1px;
+            margin-bottom: 0.75rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 3rem 2.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--border);
+            margin-top: 3rem;
+        }
+
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            nav { padding: 1rem 1.5rem; }
+            .nav-links { gap: 1.5rem; }
+            .nav-links a { font-size: 0.75rem; }
+            .project-hero { padding: 7rem 1.5rem 3rem; }
+            .section { padding: 2rem 1.5rem; }
+            .divider { padding: 0 1.5rem; }
+            .project-hero h1 { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+    <div class="logo">&lt;DATA <span>/&gt;</span></div>
+    <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#projects">Projects</a></li>
+        <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- Hero -->
+<section class="project-hero">
+    <a href="index.html#projects" class="back-link">← Back to Projects</a>
+    <h1>2026 FIFA World Cup ML Predictor</h1>
+    <p class="subtitle">A first-principles machine learning project — collecting, verifying, and merging 90 years of real World Cup match data, training a Random Forest model, and running 10,000 tournament simulations to predict who lifts the trophy in 2026.</p>
+
+    <div class="tag-row">
+        <span class="tag">Python</span>
+        <span class="tag">scikit-learn</span>
+        <span class="tag">pandas</span>
+        <span class="tag">XGBoost</span>
+        <span class="tag">Random Forest</span>
+        <span class="tag">matplotlib</span>
+        <span class="tag">Jupyter</span>
+        <span class="tag">Machine Learning</span>
+    </div>
+
+    <div class="stats-row">
+        <div class="stat-card">
+            <div class="number">864</div>
+            <div class="label">Real Matches Analyzed</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">90</div>
+            <div class="label">Years of Data (1930–2022)</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">54%</div>
+            <div class="label">Model Accuracy</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">10K</div>
+            <div class="label">Simulations Run</div>
+        </div>
+        <div class="stat-card">
+            <div class="number">48</div>
+            <div class="label">Teams Simulated</div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- Overview -->
+<section class="section fade-up">
+    <div class="section-label">// Overview</div>
+    <h2>The Challenge</h2>
+    <p>With the 2026 FIFA World Cup expanding to 48 teams for the first time, hosted across the USA, Mexico, and Canada, the question was simple: can machine learning predict who wins using nothing but historical match data?</p>
+    <p>This was built entirely from scratch with zero prior ML experience — from raw CSV files to a trained model running 10,000 simulated tournaments. Every decision, from data verification to model selection, was driven by the data itself.</p>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- Data Foundation -->
+<section class="section fade-up">
+    <div class="section-label">// Data Foundation</div>
+    <h2>Finding Real Data in a Sea of Fake</h2>
+    <p>Not all datasets are what they claim to be. Four sources were evaluated before settling on the right combination. One dataset — 832 matches with zero missing values — looked perfect until the finals were verified.</p>
+    <p>Algeria beat Argentina in the 2022 final. Iran won the 1990 World Cup. "Draw" won in 1982. The entire dataset was AI-generated fiction. It was discarded entirely. Lesson: always verify your data before building anything on top of it.</p>
+
+    <table class="data-table">
+        <thead>
+            <tr>
+                <th>Dataset</th>
+                <th>Coverage</th>
+                <th>Rows</th>
+                <th>Verdict</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>WorldCupMatches.csv</td>
+                <td>1930–2014</td>
+                <td>4,572</td>
+                <td>✓ Verified — main training data</td>
+            </tr>
+            <tr>
+                <td>WorldCups.csv</td>
+                <td>1930–2014</td>
+                <td>20</td>
+                <td>✓ Verified — tournament summaries</td>
+            </tr>
+            <tr>
+                <td>fifa_enhanced_1974_2022.csv</td>
+                <td>1974–2022</td>
+                <td>43</td>
+                <td>✓ Verified — 2018 & 2022 data</td>
+            </tr>
+            <tr>
+                <td>world_cup_last_50_years.csv</td>
+                <td>1974–2022</td>
+                <td>832</td>
+                <td>✗ Discarded — AI-generated fake data</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p style="margin-top:1.5rem;">The two verified sources were merged into a single <code style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;color:var(--cyan);">master_matches.csv</code> — 864 real matches from 1930 to 2022 with zero missing values.</p>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- Process -->
+<section class="section fade-up">
+    <div class="section-label">// Process</div>
+    <h2>From Raw Data to Predictions</h2>
+    <p>The project followed 6 phases, each building on the last — from environment setup to a fully working tournament simulator.</p>
+
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="week">PHASE 1 · ENVIRONMENT</div>
+            <h3>Python Setup in VS Code</h3>
+            <p>Configured a Python 3.13 virtual environment in VS Code with pandas, numpy, scikit-learn, XGBoost, matplotlib, seaborn, and Jupyter. Fixed kernel detection issues and an OpenMP runtime error before a single line of ML code was written.</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="week">PHASE 2 · DATA</div>
+            <h3>Data Collection & Verification</h3>
+            <p>Collected 4 datasets, verified each against known World Cup results, discarded one fake dataset, and merged the remaining real sources into a single master file covering 864 matches from 1930–2022.</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="week">PHASE 3 · FEATURES</div>
+            <h3>Feature Engineering</h3>
+            <p>Built team strength features from historical data: win percentage, average goals scored, average goals conceded, and average goal difference — calculated using a sliding window so the model never sees the future. For each match, the model sees the difference in these stats between the two teams at the time they played.</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="week">PHASE 4 · MODELLING</div>
+            <h3>Model Training & Selection</h3>
+            <p>Trained three models on 563 historical matches. First attempt predicted exact winners by name — 30+ classes, 29% accuracy. Reframed the problem to 3 outcomes (home win, away win, draw) and accuracy jumped to 54–56%. Random Forest was selected over Logistic Regression despite a slightly lower score — it actually predicted all three outcomes rather than defaulting to home win every time.</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="week">PHASE 5 · SIMULATION</div>
+            <h3>10,000 Tournament Simulations</h3>
+            <p>Built a tournament simulator that shuffles 48 teams, plays every match using model predictions, and records the winner. Initial version took 20+ minutes due to recalculating team features inside every match prediction. Solved with a pre-computed matchup cache — all 2,256 possible matchups calculated once, then looked up instantly. Runtime dropped to under 3 seconds.</p>
+        </div>
+
+        <div class="timeline-item">
+            <div class="week">PHASE 6 · RESULTS</div>
+            <h3>Predictions & Visualisation</h3>
+            <p>Compiled win probabilities, final reach rates, and semi-final rates for all 48 teams across 10,000 simulations. Visualised results as a professional grouped bar chart saved as a PNG.</p>
+        </div>
+    </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- Model Comparison -->
+<section class="section fade-up">
+    <div class="section-label">// Models</div>
+    <h2>Choosing the Right Model</h2>
+    <p>Three models were trained and evaluated on the same 80/20 train-test split. The winner wasn't the most accurate — it was the most honest.</p>
+
+    <div class="model-grid">
+        <div class="model-card">
+            <div class="model-name">Logistic Regression</div>
+            <div class="model-acc">56.6%</div>
+            <p>Highest raw accuracy but achieved it lazily — predicted home win almost every time and never once predicted a draw. Useful as a baseline but not trustworthy for simulation.</p>
+        </div>
+
+        <div class="model-card winner">
+            <div class="chosen-badge">✓ SELECTED</div>
+            <div class="model-name">Random Forest</div>
+            <div class="model-acc">54.0%</div>
+            <p>Slightly lower accuracy but predicted all three outcomes meaningfully. Better F1 scores on away wins and draws. The right model for simulating a realistic tournament where any result is possible.</p>
+        </div>
+
+        <div class="model-card">
+            <div class="model-name">XGBoost</div>
+            <div class="model-acc">47.8%</div>
+            <p>Came in third on this dataset. XGBoost often outperforms Random Forest on larger tabular datasets — with more data and feature engineering it would likely improve significantly.</p>
+        </div>
+    </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- Predictions -->
+<section class="section fade-up">
+    <div class="section-label">// Predictions</div>
+    <h2>Who Wins the 2026 World Cup?</h2>
+    <p>After 10,000 simulated tournaments using 90 years of real match history, here are the model's top picks:</p>
+
+    <div class="podium-grid">
+        <div class="podium-card gold">
+            <div class="medal">🥇</div>
+            <div class="team-name">France</div>
+            <div class="win-pct">15.5%</div>
+            <div class="pct-label">win probability</div>
+        </div>
+        <div class="podium-card silver">
+            <div class="medal">🥈</div>
+            <div class="team-name">Brazil</div>
+            <div class="win-pct">14.7%</div>
+            <div class="pct-label">win probability</div>
+        </div>
+        <div class="podium-card bronze">
+            <div class="medal">🥉</div>
+            <div class="team-name">Argentina</div>
+            <div class="win-pct">14.3%</div>
+            <div class="pct-label">win probability</div>
+        </div>
+        <div class="podium-card">
+            <div class="medal">4️⃣</div>
+            <div class="team-name">Portugal</div>
+            <div class="win-pct">9.9%</div>
+            <div class="pct-label">win probability</div>
+        </div>
+        <div class="podium-card">
+            <div class="medal">5️⃣</div>
+            <div class="team-name">Germany</div>
+            <div class="win-pct">7.6%</div>
+            <div class="pct-label">win probability</div>
+        </div>
+    </div>
+
+    <p style="margin-top:1.5rem; font-size:0.9rem;">No team exceeds 16% — a reflection of football's inherent unpredictability. Even the best professional prediction models rarely exceed 55% match accuracy. The beautiful game lives up to its name.</p>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- Key Learnings -->
+<section class="section fade-up">
+    <div class="section-label">// Learnings</div>
+    <h2>What This Project Taught</h2>
+
+    <div class="cards-grid">
+        <div class="info-card">
+            <div class="card-icon">🗑️</div>
+            <h4>Garbage In, Garbage Out</h4>
+            <p>A model trained on fake data produces fake predictions. Data verification isn't optional — it's the most important step in any ML project. Always sanity-check your data against known ground truth before building anything.</p>
+        </div>
+
+        <div class="info-card">
+            <div class="card-icon">🎯</div>
+            <h4>Problem Framing Matters More Than the Algorithm</h4>
+            <p>Predicting 30+ team names got 29% accuracy. Reframing to 3 outcomes (home win, away win, draw) got 54% — same data, same model. The single biggest accuracy gain came from thinking differently about the problem, not tuning hyperparameters.</p>
+        </div>
+
+        <div class="info-card">
+            <div class="card-icon">⚖️</div>
+            <h4>Accuracy Isn't Everything</h4>
+            <p>Logistic Regression scored higher but never predicted a draw — it was gaming the metric. Random Forest scored lower but was honest about uncertainty. For a simulation tool, honesty beats raw accuracy.</p>
+        </div>
+
+        <div class="info-card">
+            <div class="card-icon">⚡</div>
+            <h4>Cache What You Can</h4>
+            <p>The simulator took 20+ minutes because it recalculated team features inside every match prediction — 1.4 million redundant calculations. Pre-computing all 2,256 matchups once dropped runtime to under 3 seconds. Profile before optimising.</p>
+        </div>
+    </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- Results -->
+<section class="section fade-up">
+    <div class="section-label">// Impact</div>
+    <h2>Project Output</h2>
+
+    <div class="results-grid">
+        <div class="result-card">
+            <div class="big-num">864</div>
+            <div class="result-label">Real matches in master dataset</div>
+        </div>
+        <div class="result-card">
+            <div class="big-num">54%</div>
+            <div class="result-label">Model accuracy (3-outcome classification)</div>
+        </div>
+        <div class="result-card">
+            <div class="big-num">10,000</div>
+            <div class="result-label">Tournament simulations run</div>
+        </div>
+        <div class="result-card">
+            <div class="big-num">3s</div>
+            <div class="result-label">Simulation runtime after optimisation</div>
+        </div>
+        <div class="result-card">
+            <div class="big-num">48</div>
+            <div class="result-label">2026 qualified teams modelled</div>
+        </div>
+        <div class="result-card">
+            <div class="big-num">0</div>
+            <div class="result-label">Prior ML experience before this project</div>
+        </div>
+    </div>
+</section>
+
+<div class="divider"><hr></div>
+
+<!-- Tech Stack -->
+<section class="section fade-up">
+    <div class="section-label">// Tech Stack</div>
+    <h2>Tools & Technologies</h2>
+
+    <div class="tech-stack">
+        <span class="tech-item">Python 3.13</span>
+        <span class="tech-item">pandas</span>
+        <span class="tech-item">numpy</span>
+        <span class="tech-item">scikit-learn</span>
+        <span class="tech-item">XGBoost</span>
+        <span class="tech-item">Random Forest</span>
+        <span class="tech-item">matplotlib</span>
+        <span class="tech-item">seaborn</span>
+        <span class="tech-item">joblib</span>
+        <span class="tech-item">Jupyter Notebook</span>
+        <span class="tech-item">VS Code</span>
+        <span class="tech-item">Git / GitHub</span>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <p>&lt;DATA /&gt; · Syed Ijtaba Jafri · 2025</p>
+</footer>
+
+<script>
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
