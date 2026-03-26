@@ -671,6 +671,12 @@
             }
         }
 
+        /* ✅ ADDED: blink keyframe for typed cursor */
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50%       { opacity: 0; }
+        }
+
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateX(-50%) translateY(0); }
             40% { transform: translateX(-50%) translateY(-10px); }
@@ -748,6 +754,27 @@
         </div>
 
         <p class="hero-label">Data Analyst & Storyteller</p>
+
+        <!-- ✅ ADDED: Typed name block -->
+        <div style="
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 8px;
+            padding: 11px 18px;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            opacity: 0;
+            animation: fadeUp 0.8s ease forwards 0.3s;
+        ">
+            <span style="color:#ff7b72">const</span>
+            <span style="color:#79c0ff"> analyst</span>
+            <span style="color:#8b97b0"> = </span>
+            <span style="color:#a5d6ff">"<span id="typed-name"></span>"</span>
+            <span id="typed-cursor" style="display:inline-block;width:2px;height:13px;background:#06d6a0;vertical-align:middle;margin-left:1px;animation:blink 1s step-end infinite;"></span>
+        </div>
+
         <h1 class="hero-title">Turning Data<br><span class="highlight">Into Decisions</span></h1>
         <p class="hero-desc">I transform complex datasets into clear, actionable insights that drive business growth. Skilled in SQL, Python, and visualization tools.</p>
         <div class="skill-tags">
@@ -1164,7 +1191,20 @@
         <p>&copy; 2025 · Built with passion for data</p>
     </footer>
 
-                <script>
+    <script>
+        // ✅ ADDED: Typewriter for name
+        const nameEl = document.getElementById("typed-name");
+        const fullName = "Syed Ijtaba Jafri";
+        let ni = 0;
+        function typeName() {
+            if (ni <= fullName.length) {
+                nameEl.textContent = fullName.slice(0, ni);
+                ni++;
+                setTimeout(typeName, ni === 1 ? 800 : 65);
+            }
+        }
+        typeName();
+
         const observer = new IntersectionObserver(function(entries) {
             entries.forEach(function(entry) {
                 if (entry.isIntersecting) {
