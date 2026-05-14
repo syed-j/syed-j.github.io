@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NASCAR Pit Stop Intelligence | Syed Jafri</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-name">Syed Jafri</a>
+  <div class="nav-links">
+    <a href="index.html#process">Process</a>
+    <a href="index.html#work">Work</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="detail-hero">
+  <a href="index.html#work" class="detail-back">&larr; All projects</a>
+  <h1 class="detail-title">NASCAR Pit Stop Intelligence</h1>
+  <p class="detail-subtitle">Built an end-to-end analytics pipeline: from consolidating 20 raw race files via Tableau Prep into 2 unified datasets, to interactive Tableau dashboards analyzing 1,575 pit stops and 384 race entries across 10 NASCAR Cup Series races (2019 season).</p>
+  <div class="detail-meta"><span>2025</span><span>Personal Project</span></div>
+  <div class="detail-tags">
+    <span class="detail-tag">Tableau</span>
+    <span class="detail-tag">Tableau Prep</span>
+    <span class="detail-tag">ETL</span>
+    <span class="detail-tag">Excel</span>
+    <span class="detail-tag">Sports Analytics</span>
+  </div>
+</div>
+
+<div class="detail-stats-bar">
+  <div class="detail-stat"><div class="detail-stat-num">1,575</div><div class="detail-stat-label">Pit stops analyzed</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">54</div><div class="detail-stat-label">Drivers tracked</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">20&rarr;2</div><div class="detail-stat-label">Files consolidated</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">8</div><div class="detail-stat-label">Tracks</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">38.4s</div><div class="detail-stat-label">Fastest avg pit</div></div>
+</div>
+
+<!-- ETL -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Data pipeline</div>
+  <h2 class="detail-section-title">ETL Architecture</h2>
+  <p>Race data was fragmented across 20 individual files: each race had a separate pit stop CSV and results XLSX with inconsistent column names, mixed date formats, and no linking keys. Built a repeatable Tableau Prep flow that unions all sources, standardizes schemas, handles outliers, and engineers new calculated fields like Total Jack Time.</p>
+  <div class="phase-grid">
+    <div class="phase-item"><div class="phase-label">Step 01<br>Ingest</div><div class="phase-content"><div class="phase-desc">10 CSVs + 10 XLSXs wildcard union</div></div></div>
+    <div class="phase-item"><div class="phase-label">Step 02<br>Clean</div><div class="phase-content"><div class="phase-desc">Standardize headers, fix types, handle nulls</div></div></div>
+    <div class="phase-item"><div class="phase-label">Step 03<br>Transform</div><div class="phase-content"><div class="phase-desc">Calculate fields, normalize dates, composite keys</div></div></div>
+    <div class="phase-item"><div class="phase-label">Step 04<br>Output</div><div class="phase-content"><div class="phase-desc">2 combined XLSX files fed into Tableau dashboards</div></div></div>
+  </div>
+  <div class="code-block">Pit Data: 1,575 rows x 20 cols (Car Number, Lap, Road Time, Stop Time, Tires, Total Jack Time, Total Time, Track/Date)
+Results:    384 rows x 15 cols (Finishing Pos, Driver, Car Number, Manufacturer, Laps, Led, PTS, Track/Date)</div>
+</div>
+
+<!-- Performance -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Performance</div>
+  <h2 class="detail-section-title">Crew Rankings &amp; Track Analysis</h2>
+  <div class="detail-columns">
+    <div class="detail-col">
+      <div class="detail-col-head">Top 5 fastest pit crews</div>
+      <table class="detail-table">
+        <thead><tr><th>#</th><th>Car</th><th>Avg total time</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Car #12</td><td>38.4s</td></tr>
+          <tr><td>2</td><td>Car #41</td><td>39.3s</td></tr>
+          <tr><td>3</td><td>Car #17</td><td>40.6s</td></tr>
+          <tr><td>4</td><td>Car #42</td><td>41.3s</td></tr>
+          <tr><td>5</td><td>Car #36</td><td>41.8s</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="detail-col-divider"></div>
+    <div class="detail-col">
+      <div class="detail-col-head">Top 5 drivers by avg finish</div>
+      <table class="detail-table">
+        <thead><tr><th>#</th><th>Driver</th><th>Avg finish</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Kyle Busch</td><td>8.5</td></tr>
+          <tr><td>2</td><td>Kurt Busch</td><td>9.6</td></tr>
+          <tr><td>3</td><td>Brad Keselowski</td><td>10.0</td></tr>
+          <tr><td>4</td><td>Erik Jones</td><td>10.8</td></tr>
+          <tr><td>5</td><td>Alex Bowman</td><td>11.3</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Insights -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Key findings</div>
+  <h2 class="detail-section-title">Insights &amp; Outcomes</h2>
+  <div class="insights-grid">
+    <div class="insight"><div class="insight-title">18.4s Crew Performance Gap</div><div class="insight-text">The fastest crew (Car #12 at 38.4s) outperformed the slowest (Car #43 at 56.8s) by 18.4 seconds per stop, potentially costing 2+ positions per pit cycle.</div></div>
+    <div class="insight"><div class="insight-title">Track Type Drives Pit Time</div><div class="insight-text">Road courses (Watkins Glen, 55.3s) averaged 27% slower pit times than ovals (Homestead, 43.6s), reflecting different pit lane configurations.</div></div>
+    <div class="insight"><div class="insight-title">20 to 2 File Consolidation</div><div class="insight-text">Automated Tableau Prep flow eliminated manual copy-paste workflows, engineered composite join keys (Race # + Car #), and created calculated fields for deeper analysis.</div></div>
+    <div class="insight"><div class="insight-title">Manufacturer Parity</div><div class="insight-text">Wins split nearly evenly: Chevrolet (4), Toyota (3), Ford (3), despite Ford and Chevy having 2.7x more entries than Toyota.</div></div>
+  </div>
+</div>
+
+<div class="tech-stack">
+  <span class="tech-tag">Tableau</span>
+  <span class="tech-tag">Tableau Prep</span>
+  <span class="tech-tag">ETL</span>
+  <span class="tech-tag">Excel</span>
+  <span class="tech-tag">Data Visualization</span>
+  <span class="tech-tag">Sports Analytics</span>
+</div>
+
+<footer class="footer">
+  <div class="footer-headline">Let's talk <em>data.</em></div>
+  <div class="footer-links">
+    <a href="mailto:syedijtaba.ij@gmail.com">syedijtaba.ij@gmail.com</a><br>
+    <a href="https://linkedin.com/in/ijtabajafri" target="_blank">LinkedIn</a><br>
+    <a href="https://github.com/syed-j" target="_blank">GitHub</a>
+  </div>
+</footer>
+
+</body>
+</html>

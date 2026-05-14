@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sports Fan Segmentation | Syed Jafri</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-name">Syed Jafri</a>
+  <div class="nav-links">
+    <a href="index.html#process">Process</a>
+    <a href="index.html#work">Work</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="detail-hero">
+  <a href="index.html#work" class="detail-back">&larr; All projects</a>
+  <h1 class="detail-title">Sports Fan Segmentation Analysis</h1>
+  <p class="detail-subtitle">A semester-long data analytics capstone for USF Athletics: integrating Ticketmaster sales, Fanatics merchandise, and Qualtrics survey data to build fan personas, KPI dashboards, and an AI-powered engagement strategy.</p>
+  <div class="detail-meta">
+    <span>Aug to Oct 2025</span>
+    <span>USF Athletics</span>
+  </div>
+  <div class="detail-tags">
+    <span class="detail-tag">MySQL</span>
+    <span class="detail-tag">Python</span>
+    <span class="detail-tag">Excel</span>
+    <span class="detail-tag">Tableau</span>
+    <span class="detail-tag">OpenAI API</span>
+    <span class="detail-tag">Agile / Scrum</span>
+  </div>
+</div>
+
+<div class="detail-stats-bar">
+  <div class="detail-stat"><div class="detail-stat-num">3</div><div class="detail-stat-label">Data sources unified</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">1M+</div><div class="detail-stat-label">Fan records analyzed</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">4</div><div class="detail-stat-label">Fan personas created</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">30%</div><div class="detail-stat-label">Engagement improvement</div></div>
+</div>
+
+<!-- Overview -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Overview</div>
+  <h2 class="detail-section-title">The Challenge</h2>
+  <p>USF Athletics lacked a unified view of its fan base. Ticket sales, merchandise purchases, and survey feedback lived in separate silos with no way to understand who fans are, what drives them, or how to convert casual attendees into loyal supporters.</p>
+  <p>Students loved the game experience (rating it 4.6/5), but pre-game friction, particularly venue entry traffic which scored only 3.03/5, was hindering repeat attendance. The core question: how do you turn a first-time visitor into a season ticket holder?</p>
+</div>
+
+<!-- Data Foundation -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Data foundation</div>
+  <h2 class="detail-section-title">Three Data Sources, One Truth</h2>
+  <p>The project began by ingesting and cleaning data from three distinct platforms, then joining them on a shared geographic key (city) to create a unified fan dataset.</p>
+  <table class="detail-table">
+    <thead><tr><th>Source</th><th>Records</th><th>Key Fields</th><th>Cleaning Applied</th></tr></thead>
+    <tbody>
+      <tr><td>Fanatics (Merchandise)</td><td>200K+ orders</td><td>Order ID, Product, Size, City, Price</td><td>Removed invalid sizes (e.g. "$50", "13 Pro Max"), nulls, duplicates</td></tr>
+      <tr><td>Ticketmaster (Sales)</td><td>42,500 attendees</td><td>Account ID, Event Date, City, State, % Attended</td><td>Dropped missing acct_id/city/state, converted dates</td></tr>
+      <tr><td>Qualtrics (Survey)</td><td>1,000+ responses</td><td>Satisfaction scores, seat location, traffic rating</td><td>Renamed ambiguous columns to descriptive labels</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Process -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Process</div>
+  <h2 class="detail-section-title">Project Phases</h2>
+  <p>The project followed an Agile framework across two 4-week sprints, with weekly deliverables and iterative stakeholder feedback.</p>
+  <div class="phase-grid">
+    <div class="phase-item"><div class="phase-label">Weeks 1-3<br>Research</div><div class="phase-content"><div class="phase-title">Fan Persona Development</div><div class="phase-desc">Analyzed Florida DMA demographics (Esri) and USF fan survey data (Vision Insights) to create data-backed personas. Identified four distinct fan segments based on spending behavior, attendance frequency, geography, and engagement channel preferences.</div></div></div>
+    <div class="phase-item"><div class="phase-label">Weeks 4-6<br>Data prep</div><div class="phase-content"><div class="phase-title">Data Cleaning &amp; Integration</div><div class="phase-desc">Imported all three datasets into SQLite using DBeaver. Cleaned invalid entries, resolved duplicate Order IDs, standardized date formats, and performed a JOIN on city to link merchandise buyers with ticket holders. Created the unified dataset powering all downstream analysis.</div></div></div>
+    <div class="phase-item"><div class="phase-label">Weeks 7-8<br>Agile</div><div class="phase-content"><div class="phase-title">Sprint Planning &amp; KPI Definition</div><div class="phase-desc">Defined SMART goals: +8% attendance growth, +5% season-ticket renewal, +10% merchandise conversion. Built an Agile project plan with two 4-week sprints, clear acceptance criteria, and risk mitigation strategies for data gaps and privacy compliance.</div></div></div>
+    <div class="phase-item"><div class="phase-label">Weeks 9-12<br>Sprint 1</div><div class="phase-content"><div class="phase-title">Dashboard MVP &amp; KPI Visualization</div><div class="phase-desc">Built an interactive dashboard with three core KPIs: Average Spend Per Fan Segment, Attendee Retention Funnel (42,500 to 15,725 returners to 6,800 die-hards to 2,975 season members), and Geographic Penetration across 10+ states. Integrated an OpenAI-powered "Generate Persona Insights" button.</div></div></div>
+    <div class="phase-item"><div class="phase-label">Weeks 13-16<br>Sprint 2</div><div class="phase-content"><div class="phase-title">AI Chatbot &amp; Final Presentation</div><div class="phase-desc">Prototyped a Student Gameday Assistant Chatbot designed for GoUSFBulls.com: answering parking questions, recommending arrival times, delivering student promo codes, and collecting post-game NPS feedback. Compared Microsoft Azure vs. Satisfi Labs frameworks and recommended a hybrid approach.</div></div></div>
+  </div>
+</div>
+
+<!-- Personas -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Segmentation</div>
+  <h2 class="detail-section-title">Fan Personas</h2>
+  <p>Four data-driven personas emerged from the analysis, each with distinct behaviors, spending patterns, and engagement strategies.</p>
+  <div class="card-grid" style="grid-template-columns: repeat(4, 1fr);">
+    <div class="card">
+      <div class="card-title">Die-Hard Fan</div>
+      <div class="card-label">High-value loyalist</div>
+      <div class="card-detail">Avg. Spend: $225<br>Attendance: 3+ games/season<br>Behavior: Season tickets, premium merch<br>Strategy: Retention &amp; upsell</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Weekend Warrior</div>
+      <div class="card-label">Social student fan</div>
+      <div class="card-detail">Age: 18-24<br>Motivation: Social bonding, rivalry games<br>Budget: &le;$25/event<br>Strategy: Student bundles, shuttle promos</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Out-of-Towner</div>
+      <div class="card-label">Regional supporter</div>
+      <div class="card-detail">Avg. Spend: $140<br>Top States: GA, NC, SC, NY<br>Behavior: Travel for big games + merch<br>Strategy: Travel packages, geo-targeting</div>
+    </div>
+    <div class="card">
+      <div class="card-title">Casual Fan</div>
+      <div class="card-label">Conversion opportunity</div>
+      <div class="card-detail">Avg. Spend: $75<br>Attendance: 1-2 games/season<br>Behavior: Walk-up tickets, no merch<br>Strategy: First-to-repeat conversion</div>
+    </div>
+  </div>
+</div>
+
+<!-- KPIs -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Analytics</div>
+  <h2 class="detail-section-title">Key Performance Indicators</h2>
+  <div class="kpi-grid">
+    <div class="kpi">
+      <div class="kpi-label">KPI 1</div>
+      <div class="kpi-title">Average Spend Per Fan Segment</div>
+      <div class="kpi-desc">Quantifies the financial value of different fan segments to identify high-value groups and growth opportunities. Die-Hard fans average $225 vs. $75 for Casual: a 3x revenue gap driving targeted strategy.</div>
+      <div class="kpi-formula">(Total Ticket Price + Total Merch Price) / Unique Fans in Segment</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">KPI 2</div>
+      <div class="kpi-title">Attendee Retention Funnel</div>
+      <div class="kpi-desc">Tracks the journey from first-time attendee to season ticket member. Of 42,500 total 2023 attendees, 37% returned for a 2nd game, 16% became die-hard (3+ games), and 7% converted to season tickets.</div>
+      <div class="kpi-formula">(First-Time Attendees Who Return) / (Total First-Time Attendees)</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi-label">KPI 3</div>
+      <div class="kpi-title">Geographic Penetration</div>
+      <div class="kpi-desc">Measures marketing effectiveness across regions and identifies "cold spots." Georgia led out-of-state fans with 1,800+ combined ticket + merch buyers, followed by NC and SC.</div>
+      <div class="kpi-formula">(Zip Codes with Sales) / (Total Target Market Zip Codes)</div>
+    </div>
+  </div>
+</div>
+
+<!-- AI Integration -->
+<div class="detail-section">
+  <div class="detail-section-tag">// AI integration</div>
+  <h2 class="detail-section-title">AI-Powered Engagement</h2>
+  <div class="insights-grid">
+    <div class="insight">
+      <div class="insight-title">Dashboard AI Insights</div>
+      <div class="insight-text">Integrated an OpenAI API-powered "Generate Persona Insights" button that produces real-time narrative summaries of KPI trends, marketing recommendations, and anomaly callouts, letting non-technical staff extract actionable intelligence without writing queries.</div>
+    </div>
+    <div class="insight">
+      <div class="insight-title">Student Gameday Chatbot</div>
+      <div class="insight-text">Designed a conversational AI assistant for GoUSFBulls.com that answers arrival/parking questions in real-time, recommends optimal arrival windows, delivers student promo codes, and collects post-game NPS feedback. Projected impact: -20% traffic complaints, +10% repeat attendance, +15% promo conversion.</div>
+    </div>
+    <div class="insight">
+      <div class="insight-title">Framework Comparison</div>
+      <div class="insight-text">Evaluated Microsoft Azure (Copilot Studio + Cognitive Search + Fabric) vs. Satisfi Labs (Custom LLM + Ticketing APIs). Recommended a hybrid approach: Azure backend for scalable data management, Satisfi frontend for sports-specific conversational AI.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Impact -->
+<div class="detail-stats-bar">
+  <div class="detail-stat"><div class="detail-stat-num">42.5K</div><div class="detail-stat-label">Fans profiled</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">4</div><div class="detail-stat-label">Personas</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">+30%</div><div class="detail-stat-label">Engagement</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">3</div><div class="detail-stat-label">KPI dashboards</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">10+</div><div class="detail-stat-label">States analyzed</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">16</div><div class="detail-stat-label">Weeks</div></div>
+</div>
+
+<div class="tech-stack">
+  <span class="tech-tag">MySQL</span>
+  <span class="tech-tag">Python</span>
+  <span class="tech-tag">Excel</span>
+  <span class="tech-tag">Tableau</span>
+  <span class="tech-tag">OpenAI API</span>
+  <span class="tech-tag">Gamma</span>
+  <span class="tech-tag">Agile / Scrum</span>
+</div>
+
+<footer class="footer">
+  <div class="footer-headline">Let's talk <em>data.</em></div>
+  <div class="footer-links">
+    <a href="mailto:syedijtaba.ij@gmail.com">syedijtaba.ij@gmail.com</a><br>
+    <a href="https://linkedin.com/in/ijtabajafri" target="_blank">LinkedIn</a><br>
+    <a href="https://github.com/syed-j" target="_blank">GitHub</a>
+  </div>
+</footer>
+
+</body>
+</html>

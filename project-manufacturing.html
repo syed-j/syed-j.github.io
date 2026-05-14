@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KAT Manufacturing Dashboard | Syed Jafri</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-name">Syed Jafri</a>
+  <div class="nav-links">
+    <a href="index.html#process">Process</a>
+    <a href="index.html#work">Work</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="detail-hero">
+  <a href="index.html#work" class="detail-back">&larr; All projects</a>
+  <h1 class="detail-title">KAT Manufacturing Sales Dashboard</h1>
+  <p class="detail-subtitle">Built a 7-worksheet Tableau dashboard analyzing $100.6M in sales revenue across 713 customers, 6 global divisions, and 10+ product lines, tracking quarterly performance from 2019 to 2021 to identify growth drivers and regional sales trends.</p>
+  <div class="detail-meta"><span>2024</span><span>Course Project</span></div>
+  <div class="detail-tags">
+    <span class="detail-tag">Tableau</span>
+    <span class="detail-tag">Excel</span>
+    <span class="detail-tag">Data Visualization</span>
+    <span class="detail-tag">Sales Analytics</span>
+    <span class="detail-tag">Manufacturing</span>
+  </div>
+</div>
+
+<div class="detail-stats-bar">
+  <div class="detail-stat"><div class="detail-stat-num">$100.6M</div><div class="detail-stat-label">Total revenue</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">7,284</div><div class="detail-stat-label">Sales records</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">713</div><div class="detail-stat-label">Customers</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">6</div><div class="detail-stat-label">Global divisions</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">67%</div><div class="detail-stat-label">3-year growth</div></div>
+</div>
+
+<!-- Dashboard -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Dashboard</div>
+  <h2 class="detail-section-title">Tableau Worksheets</h2>
+  <div class="phase-grid">
+    <div class="phase-item"><div class="phase-label">Sheet 1</div><div class="phase-content"><div class="phase-title">Revenue by Category</div><div class="phase-desc">Broke down $100.6M across 4 categories: Materials Processing leads at 47.3%, followed by Govt/R&D (25.2%) and Telecom (20.4%).</div></div></div>
+    <div class="phase-item"><div class="phase-label">Sheet 2</div><div class="phase-content"><div class="phase-title">Revenue by Year</div><div class="phase-desc">Tracked year-over-year growth from $25.9M (2019) to $43.4M (2021): a 67% increase driven by post-pandemic manufacturing demand.</div></div></div>
+    <div class="phase-item"><div class="phase-label">Sheet 3</div><div class="phase-content"><div class="phase-title">Sales by Division</div><div class="phase-desc">Compared performance across 6 global divisions: Germany (44.2%), US (36.0%), UK (8.5%), India, Russia, and Korea.</div></div></div>
+    <div class="phase-item"><div class="phase-label">Sheet 4</div><div class="phase-content"><div class="phase-title">Geographic Map</div><div class="phase-desc">Revenue concentration visualization highlighting Germany and the US, together accounting for 80.2% of total sales.</div></div></div>
+    <div class="phase-item"><div class="phase-label">Sheet 5</div><div class="phase-content"><div class="phase-title">Sales by Product Line</div><div class="phase-desc">Analyzed 10+ product lines: Single Channel EDFA led at $15.9M, followed by Low Yt ($12.2M) and Er Laser ($8.5M).</div></div></div>
+    <div class="phase-item"><div class="phase-label">Sheets 6-7</div><div class="phase-content"><div class="phase-title">Top Customers &amp; Quarterly Trends</div><div class="phase-desc">Ranked 713 customers by revenue contribution and analyzed seasonal patterns across 12 quarters revealing consistent growth trajectory.</div></div></div>
+  </div>
+</div>
+
+<!-- Revenue Breakdown -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Revenue breakdown</div>
+  <h2 class="detail-section-title">Division &amp; Category Performance</h2>
+  <div class="detail-columns">
+    <div class="detail-col">
+      <div class="detail-col-head">Revenue by division</div>
+      <div class="stat-row"><span class="stat-name">Germany</span><span class="stat-value">$44.5M</span><span class="stat-pct">44.2%</span></div>
+      <div class="stat-row"><span class="stat-name">United States</span><span class="stat-value">$36.2M</span><span class="stat-pct">36.0%</span></div>
+      <div class="stat-row"><span class="stat-name">United Kingdom</span><span class="stat-value">$8.5M</span><span class="stat-pct">8.5%</span></div>
+      <div class="stat-row"><span class="stat-name">India</span><span class="stat-value">$4.8M</span><span class="stat-pct">4.8%</span></div>
+      <div class="stat-row"><span class="stat-name">Russia</span><span class="stat-value">$4.2M</span><span class="stat-pct">4.2%</span></div>
+      <div class="stat-row"><span class="stat-name">Korea</span><span class="stat-value">$2.3M</span><span class="stat-pct">2.3%</span></div>
+    </div>
+    <div class="detail-col-divider"></div>
+    <div class="detail-col">
+      <div class="detail-col-head">Revenue by category</div>
+      <div class="stat-row"><span class="stat-name">Materials Processing</span><span class="stat-value">$47.5M</span><span class="stat-pct">47.3%</span></div>
+      <div class="stat-row"><span class="stat-name">Govt / R&amp;D</span><span class="stat-value">$25.3M</span><span class="stat-pct">25.2%</span></div>
+      <div class="stat-row"><span class="stat-name">Telecom</span><span class="stat-value">$20.5M</span><span class="stat-pct">20.4%</span></div>
+      <div class="stat-row"><span class="stat-name">Medical</span><span class="stat-value">$7.2M</span><span class="stat-pct">7.2%</span></div>
+      <div style="height: 16px;"></div>
+      <div class="detail-col-head">Revenue by year</div>
+      <div class="stat-row"><span class="stat-name">2019</span><span class="stat-value">$25.9M</span><span class="stat-pct">25.8%</span></div>
+      <div class="stat-row"><span class="stat-name">2020</span><span class="stat-value">$31.3M</span><span class="stat-pct">31.1%</span></div>
+      <div class="stat-row"><span class="stat-name">2021</span><span class="stat-value">$43.4M</span><span class="stat-pct">43.1%</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- Top Markets -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Markets</div>
+  <h2 class="detail-section-title">Top Markets &amp; Product Lines</h2>
+  <div class="detail-columns">
+    <div class="detail-col">
+      <div class="detail-col-head">Top markets by revenue</div>
+      <table class="detail-table">
+        <thead><tr><th>#</th><th>Market</th><th>Revenue</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>General Manufacturing</td><td>$27.7M</td></tr>
+          <tr><td>2</td><td>Research</td><td>$26.8M</td></tr>
+          <tr><td>3</td><td>BB Access</td><td>$9.3M</td></tr>
+          <tr><td>4</td><td>Aerospace</td><td>$7.2M</td></tr>
+          <tr><td>5</td><td>Medical Device</td><td>$5.8M</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="detail-col-divider"></div>
+    <div class="detail-col">
+      <div class="detail-col-head">Top product lines by revenue</div>
+      <table class="detail-table">
+        <thead><tr><th>#</th><th>Product Line</th><th>Revenue</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Single Channel EDFA</td><td>$15.9M</td></tr>
+          <tr><td>2</td><td>Low Yt (&lt;100)</td><td>$12.2M</td></tr>
+          <tr><td>3</td><td>Er Laser</td><td>$8.5M</td></tr>
+          <tr><td>4</td><td>Pulsed Yt</td><td>$7.7M</td></tr>
+          <tr><td>5</td><td>Hi Yt (&gt;1 kW)</td><td>$6.7M</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Key Findings -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Key findings</div>
+  <h2 class="detail-section-title">Insights &amp; Outcomes</h2>
+  <div class="insights-grid">
+    <div class="insight"><div class="insight-title">67% Revenue Growth (2019 to 2021)</div><div class="insight-text">Revenue surged from $25.9M to $43.4M over 3 years, with acceleration in 2021 (+39% YoY) driven by post-pandemic demand in materials processing and research markets.</div></div>
+    <div class="insight"><div class="insight-title">Germany + US = 80% of Revenue</div><div class="insight-text">Two divisions account for $80.7M of $100.6M total. The remaining 4 divisions (UK, India, Russia, Korea) collectively contribute just 19.8%, signaling heavy geographic concentration risk.</div></div>
+    <div class="insight"><div class="insight-title">Materials Processing Dominates</div><div class="insight-text">At $47.5M (47.3%), Materials Processing generates nearly half of all revenue, more than Telecom and Medical combined. General Manufacturing and Research are the top two end markets.</div></div>
+    <div class="insight"><div class="insight-title">Medical Segment Underrepresented</div><div class="insight-text">Medical accounts for only 7.2% ($7.2M) despite strong industry growth. This represents a potential expansion opportunity given the company's existing product capabilities.</div></div>
+  </div>
+</div>
+
+<div class="tech-stack">
+  <span class="tech-tag">Tableau</span>
+  <span class="tech-tag">Excel</span>
+  <span class="tech-tag">Data Visualization</span>
+  <span class="tech-tag">Sales Analytics</span>
+  <span class="tech-tag">Manufacturing</span>
+</div>
+
+<footer class="footer">
+  <div class="footer-headline">Let's talk <em>data.</em></div>
+  <div class="footer-links">
+    <a href="mailto:syedijtaba.ij@gmail.com">syedijtaba.ij@gmail.com</a><br>
+    <a href="https://linkedin.com/in/ijtabajafri" target="_blank">LinkedIn</a><br>
+    <a href="https://github.com/syed-j" target="_blank">GitHub</a>
+  </div>
+</footer>
+
+</body>
+</html>

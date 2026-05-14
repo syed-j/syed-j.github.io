@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Healthcare Policy Analysis | Syed Jafri</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-name">Syed Jafri</a>
+  <div class="nav-links">
+    <a href="index.html#process">Process</a>
+    <a href="index.html#work">Work</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="detail-hero">
+  <a href="index.html#work" class="detail-back">&larr; All projects</a>
+  <h1 class="detail-title">State Healthcare Policy Analysis</h1>
+  <p class="detail-subtitle">Scored and compared 20 medical billing and patient protection policies across all 50 US states using Excel, revealing stark regional disparities in healthcare consumer protections with a 12-point gap between the most and least protective states.</p>
+  <div class="detail-meta"><span>2024</span><span>Course Project</span></div>
+  <div class="detail-tags">
+    <span class="detail-tag">Excel</span>
+    <span class="detail-tag">VLOOKUP</span>
+    <span class="detail-tag">Pivot Tables</span>
+    <span class="detail-tag">Data Analysis</span>
+    <span class="detail-tag">Healthcare</span>
+  </div>
+</div>
+
+<div class="detail-stats-bar">
+  <div class="detail-stat"><div class="detail-stat-num">50</div><div class="detail-stat-label">States analyzed</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">20</div><div class="detail-stat-label">Policies tracked</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">4</div><div class="detail-stat-label">Regions compared</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">5.2</div><div class="detail-stat-label">Avg policy score</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">12pt</div><div class="detail-stat-label">Max score gap</div></div>
+</div>
+
+<div class="detail-section">
+  <div class="detail-section-tag">// Overview</div>
+  <h2 class="detail-section-title">Project Scope</h2>
+  <p>Built a comprehensive Excel workbook analyzing how each of the 50 US states protects consumers on medical billing, debt collection, and healthcare access. Each state was scored on 20 binary/partial policies, from Medicaid expansion to surprise billing limits to wage garnishment restrictions, producing a composite "Total Policy Score." The workbook features VLOOKUP-powered state comparison tools, 3 pivot table analyses by region, and filtered views to isolate specific policy adoption patterns.</p>
+</div>
+
+<!-- Regional Analysis -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Regional analysis</div>
+  <h2 class="detail-section-title">Policy Scores by Region</h2>
+  <div class="detail-columns">
+    <div class="detail-col">
+      <div class="detail-col-head">Top 5 most protective</div>
+      <table class="detail-table">
+        <thead><tr><th>#</th><th>State</th><th>Region</th><th>Score</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Maryland</td><td>East</td><td>14.0</td></tr>
+          <tr><td>2</td><td>California</td><td>West</td><td>10.5</td></tr>
+          <tr><td>3</td><td>Washington</td><td>West</td><td>9.0</td></tr>
+          <tr><td>4</td><td>Colorado</td><td>West</td><td>8.5</td></tr>
+          <tr><td>5</td><td>Connecticut</td><td>East</td><td>8.5</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="detail-col-divider"></div>
+    <div class="detail-col">
+      <div class="detail-col-head">Bottom 5 least protective</div>
+      <table class="detail-table">
+        <thead><tr><th>#</th><th>State</th><th>Region</th><th>Score</th></tr></thead>
+        <tbody>
+          <tr><td>50</td><td>Tennessee</td><td>South</td><td>2.0</td></tr>
+          <tr><td>49</td><td>Alaska</td><td>West</td><td>2.5</td></tr>
+          <tr><td>48</td><td>South Dakota</td><td>Central</td><td>2.5</td></tr>
+          <tr><td>47</td><td>Virginia</td><td>South</td><td>2.5</td></tr>
+          <tr><td>46</td><td>Alabama</td><td>South</td><td>3.0</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Policy Adoption -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Policy adoption</div>
+  <h2 class="detail-section-title">How Many States Adopted Each Policy?</h2>
+  <div class="bar-item"><span class="bar-label">Expanded Medicaid</span><div class="bar-track"><div class="bar-fill" style="width:74%"></div></div><span class="bar-value">37/50</span></div>
+  <div class="bar-item"><span class="bar-label">Prohibit Arrest for Debt</span><div class="bar-track"><div class="bar-fill" style="width:70%"></div></div><span class="bar-value">35/50</span></div>
+  <div class="bar-item"><span class="bar-label">Accurate Itemized Bills</span><div class="bar-track"><div class="bar-fill" style="width:60%"></div></div><span class="bar-value">30/50</span></div>
+  <div class="bar-item"><span class="bar-label">Restrict Wage Garnishment</span><div class="bar-track"><div class="bar-fill" style="width:54%"></div></div><span class="bar-value">27/50</span></div>
+  <div class="bar-item"><span class="bar-label">Limit Surprise Billing</span><div class="bar-track"><div class="bar-fill" style="width:46%"></div></div><span class="bar-value">23/50</span></div>
+  <div class="bar-item"><span class="bar-label">Require Charity Care</span><div class="bar-track"><div class="bar-fill" style="width:40%"></div></div><span class="bar-value">20/50</span></div>
+  <div class="bar-item"><span class="bar-label">Billing Dispute Process</span><div class="bar-track"><div class="bar-fill" style="width:16%"></div></div><span class="bar-value">8/50</span></div>
+  <div class="bar-item"><span class="bar-label">Offer Payment Plans</span><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div><span class="bar-value">4/50</span></div>
+  <div class="bar-item"><span class="bar-label">Restrict Bank Seizure</span><div class="bar-track"><div class="bar-fill" style="width:4%"></div></div><span class="bar-value">2/50</span></div>
+</div>
+
+<!-- Insights -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Key findings</div>
+  <h2 class="detail-section-title">Insights &amp; Outcomes</h2>
+  <div class="insights-grid">
+    <div class="insight"><div class="insight-title">East Leads, South Lags</div><div class="insight-text">Eastern states averaged 6.6 policy score vs the South's 4.1, a 61% gap. Maryland alone (14.0) scored nearly 3x the national average of 5.2, driven by strong billing transparency and debt protection laws.</div></div>
+    <div class="insight"><div class="insight-title">Medicaid Does Not Equal Full Protection</div><div class="insight-text">While 37 states expanded Medicaid, only 4 require payment plans before collections and just 1 prohibits selling medical debt, showing expansion alone doesn't ensure consumer protection.</div></div>
+    <div class="insight"><div class="insight-title">Debt Collection Blind Spot</div><div class="insight-text">Only 2 states restrict bank account seizure for medical debt and 4 disclose their collection policies. The most common protections (Medicaid, arrest prohibition) leave financial enforcement largely unregulated.</div></div>
+    <div class="insight"><div class="insight-title">12-Point Score Spread</div><div class="insight-text">The gap between Maryland (14) and Tennessee (2) reveals vastly different levels of healthcare consumer protection. Patients in the lowest-scoring states have minimal safeguards against aggressive medical billing.</div></div>
+  </div>
+</div>
+
+<!-- Excel techniques -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Excel techniques</div>
+  <h2 class="detail-section-title">Workbook Features</h2>
+  <div class="insights-grid">
+    <div class="insight"><div class="insight-title">VLOOKUP Comparisons</div><div class="insight-text">Built a dynamic comparison tool: enter any two state codes and instantly see a side-by-side breakdown of all 20 policies with auto-populated names, regions, and scores.</div></div>
+    <div class="insight"><div class="insight-title">3 Pivot Table Analyses</div><div class="insight-text">Average policy score by region, state-level adoption of key policies (Medicaid, surprise billing, itemized bills), and filtered score rankings for selected states.</div></div>
+    <div class="insight"><div class="insight-title">Filtered Views</div><div class="insight-text">Three pre-built filter configurations for quick analysis: isolating states by region, by specific policy adoption, and by score thresholds.</div></div>
+  </div>
+</div>
+
+<div class="tech-stack">
+  <span class="tech-tag">Excel</span>
+  <span class="tech-tag">VLOOKUP</span>
+  <span class="tech-tag">Pivot Tables</span>
+  <span class="tech-tag">Data Analysis</span>
+  <span class="tech-tag">Healthcare</span>
+</div>
+
+<footer class="footer">
+  <div class="footer-headline">Let's talk <em>data.</em></div>
+  <div class="footer-links">
+    <a href="mailto:syedijtaba.ij@gmail.com">syedijtaba.ij@gmail.com</a><br>
+    <a href="https://linkedin.com/in/ijtabajafri" target="_blank">LinkedIn</a><br>
+    <a href="https://github.com/syed-j" target="_blank">GitHub</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pizza Shop Analytics | Syed Jafri</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-name">Syed Jafri</a>
+  <div class="nav-links">
+    <a href="index.html#process">Process</a>
+    <a href="index.html#work">Work</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="detail-hero">
+  <a href="index.html#work" class="detail-back">&larr; All projects</a>
+  <h1 class="detail-title">Pizza Shop Data Analytics</h1>
+  <p class="detail-subtitle">End-to-end sales analytics for a pizza restaurant: from raw transactional data (48,620 rows) through SQL computation to an interactive Tableau dashboard. Uncovered revenue drivers, peak ordering patterns, and category performance across 32 pizza varieties.</p>
+  <div class="detail-meta"><span>May to Jun 2025</span><span>Personal Project</span></div>
+  <div class="detail-tags">
+    <span class="detail-tag">MySQL</span>
+    <span class="detail-tag">Tableau</span>
+    <span class="detail-tag">SQL</span>
+    <span class="detail-tag">Excel</span>
+  </div>
+</div>
+
+<div class="detail-stats-bar">
+  <div class="detail-stat"><div class="detail-stat-num">$817K</div><div class="detail-stat-label">Total revenue</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">21,350</div><div class="detail-stat-label">Total orders</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">49,574</div><div class="detail-stat-label">Pizzas sold</div></div>
+  <div class="detail-stat"><div class="detail-stat-num">32</div><div class="detail-stat-label">Pizza varieties</div></div>
+</div>
+
+<div class="detail-section">
+  <div class="detail-section-tag">// Overview</div>
+  <h2 class="detail-section-title">The Challenge</h2>
+  <p>A pizza shop needed to understand its sales performance across a full year of transaction data: 48,620 rows covering every order, pizza type, size, category, and timestamp. The goal was to build automated SQL queries for 12+ KPIs and deliver an interactive dashboard that would replace hours of manual reporting for stakeholders.</p>
+</div>
+
+<div class="detail-section">
+  <div class="detail-section-tag">// Dashboard</div>
+  <h2 class="detail-section-title">Tableau Dashboard</h2>
+
+  <div style="max-width: 900px; margin: 0 auto; text-align: center;">
+    <img class="detail-image" src="pizza-dashboard.png" alt="Pizza Sales Tableau Dashboard showing KPIs, hourly and weekly trends, sales by category and size" style="width: 100%; height: auto; display: block;">
+    <p style="color: var(--faint); font-size: 13px; margin: 10px 0 0 0;">Interactive Tableau dashboard surfacing 12+ KPIs across revenue, volume, timing, and category performance</p>
+  </div>
+</div>
+
+<div class="detail-section">
+  <div class="detail-section-tag">// SQL</div>
+  <h2 class="detail-section-title">Automated Computations</h2>
+  <p>20+ SQL queries were written in MySQL to compute all KPIs, trend analyses, and ranking breakdowns: automating what previously required hours of manual spreadsheet work.</p>
+  <div class="detail-columns">
+    <div class="detail-col">
+      <div class="detail-col-head">Revenue &amp; averages</div>
+      <div class="code-block">-- Total revenue
+SELECT SUM(total_price)
+FROM Pizza_sales;
+
+-- Avg order value
+SELECT ROUND(SUM(total_price)
+  / COUNT(DISTINCT order_id), 2)
+FROM Pizza_sales;</div>
+    </div>
+    <div class="detail-col-divider"></div>
+    <div class="detail-col">
+      <div class="detail-col-head">Trend analysis</div>
+      <div class="code-block">-- Hourly trend for pizzas sold
+SELECT HOUR(order_time) AS order_hour,
+  SUM(quantity) AS total_pizzas_sold
+FROM Pizza_sales
+GROUP BY HOUR(order_time)
+ORDER BY HOUR(order_time);</div>
+    </div>
+  </div>
+</div>
+
+<div class="detail-section">
+  <div class="detail-section-tag">// Performance</div>
+  <h2 class="detail-section-title">Rankings &amp; Categories</h2>
+  <div class="detail-columns">
+    <div class="detail-col">
+      <div class="detail-col-head">Top 5 by revenue</div>
+      <table class="detail-table">
+        <thead><tr><th>#</th><th>Pizza</th><th>Revenue</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Thai Chicken Pizza</td><td>$43,434</td></tr>
+          <tr><td>2</td><td>Barbecue Chicken Pizza</td><td>$42,768</td></tr>
+          <tr><td>3</td><td>California Chicken Pizza</td><td>$41,410</td></tr>
+          <tr><td>4</td><td>Classic Deluxe Pizza</td><td>$38,181</td></tr>
+          <tr><td>5</td><td>Spicy Italian Pizza</td><td>$34,831</td></tr>
+        </tbody>
+      </table>
+      <div style="height:16px"></div>
+      <div class="detail-col-head">Bottom 5 by revenue</div>
+      <table class="detail-table">
+        <thead><tr><th>#</th><th>Pizza</th><th>Revenue</th></tr></thead>
+        <tbody>
+          <tr><td>32</td><td>Brie Carre Pizza</td><td>$11,589</td></tr>
+          <tr><td>31</td><td>Green Garden Pizza</td><td>$13,956</td></tr>
+          <tr><td>30</td><td>Spinach Supreme Pizza</td><td>$15,278</td></tr>
+          <tr><td>29</td><td>Mediterranean Pizza</td><td>$15,361</td></tr>
+          <tr><td>28</td><td>Spinach Pesto Pizza</td><td>$15,596</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="detail-col-divider"></div>
+    <div class="detail-col">
+      <div class="detail-col-head">Revenue by category</div>
+      <div class="stat-row"><span class="stat-name">Classic</span><span class="stat-value">$220K</span><span class="stat-pct">26.9%</span></div>
+      <div class="stat-row"><span class="stat-name">Supreme</span><span class="stat-value">$208K</span><span class="stat-pct">25.5%</span></div>
+      <div class="stat-row"><span class="stat-name">Chicken</span><span class="stat-value">$196K</span><span class="stat-pct">24.0%</span></div>
+      <div class="stat-row"><span class="stat-name">Veggie</span><span class="stat-value">$194K</span><span class="stat-pct">23.7%</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="detail-section">
+  <div class="detail-section-tag">// Insights</div>
+  <h2 class="detail-section-title">Key Findings</h2>
+  <div class="insights-grid">
+    <div class="insight"><div class="insight-title">Peak Hours</div><div class="insight-text">Lunch rush (12 to 1 PM) and dinner (5 to 7 PM) drive the highest volume. Orders drop sharply after 9 PM.</div></div>
+    <div class="insight"><div class="insight-title">Size Preference</div><div class="insight-text">Large (45.9%) dominates, followed by Medium (30.5%) and Regular (21.8%). XL and XXL under 2% combined.</div></div>
+    <div class="insight"><div class="insight-title">Balanced Categories</div><div class="insight-text">All 4 categories within 3% of each other. Classic leads at 26.9%, showing broad menu appeal across the board.</div></div>
+  </div>
+</div>
+
+<div class="tech-stack">
+  <span class="tech-tag">MySQL</span>
+  <span class="tech-tag">Tableau</span>
+  <span class="tech-tag">SQL</span>
+  <span class="tech-tag">Excel</span>
+</div>
+
+<footer class="footer">
+  <div class="footer-headline">Let's talk <em>data.</em></div>
+  <div class="footer-links">
+    <a href="mailto:syedijtaba.ij@gmail.com">syedijtaba.ij@gmail.com</a><br>
+    <a href="https://linkedin.com/in/ijtabajafri" target="_blank">LinkedIn</a><br>
+    <a href="https://github.com/syed-j" target="_blank">GitHub</a>
+  </div>
+</footer>
+
+</body>
+</html>

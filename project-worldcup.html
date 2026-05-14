@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FIFA World Cup ML Predictor | Syed Jafri</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="index.html" class="nav-name">Syed Jafri</a>
+  <div class="nav-links">
+    <a href="index.html#process">Process</a>
+    <a href="index.html#work">Work</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="detail-hero">
+  <a href="index.html#work" class="detail-back">&larr; All projects</a>
+  <h1 class="detail-title">2026 FIFA World Cup ML Predictor</h1>
+  <p class="detail-subtitle">A first-principles machine learning project: collecting, verifying, and merging 90 years of real World Cup match data, training a Random Forest model, and running 10,000 tournament simulations to predict who lifts the trophy in 2026.</p>
+  <div class="detail-meta">
+    <span>2025</span>
+    <span>Personal Project</span>
+  </div>
+  <div class="detail-tags">
+    <span class="detail-tag">Python</span>
+    <span class="detail-tag">scikit-learn</span>
+    <span class="detail-tag">pandas</span>
+    <span class="detail-tag">XGBoost</span>
+    <span class="detail-tag">Random Forest</span>
+    <span class="detail-tag">matplotlib</span>
+    <span class="detail-tag">Jupyter</span>
+  </div>
+</div>
+
+<div class="detail-stats-bar">
+  <div class="detail-stat">
+    <div class="detail-stat-num">864</div>
+    <div class="detail-stat-label">Real matches analyzed</div>
+  </div>
+  <div class="detail-stat">
+    <div class="detail-stat-num">90</div>
+    <div class="detail-stat-label">Years of data</div>
+  </div>
+  <div class="detail-stat">
+    <div class="detail-stat-num">54%</div>
+    <div class="detail-stat-label">Model accuracy</div>
+  </div>
+  <div class="detail-stat">
+    <div class="detail-stat-num">10K</div>
+    <div class="detail-stat-label">Simulations run</div>
+  </div>
+  <div class="detail-stat">
+    <div class="detail-stat-num">48</div>
+    <div class="detail-stat-label">Teams simulated</div>
+  </div>
+</div>
+
+<!-- Overview -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Overview</div>
+  <h2 class="detail-section-title">The Challenge</h2>
+  <p>With the 2026 FIFA World Cup expanding to 48 teams for the first time, hosted across the USA, Mexico, and Canada, the question was simple: can machine learning predict who wins using nothing but historical match data?</p>
+  <p>This was built entirely from scratch with zero prior ML experience: from raw CSV files to a trained model running 10,000 simulated tournaments. Every decision, from data verification to model selection, was driven by the data itself.</p>
+</div>
+
+<!-- Data Foundation -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Data foundation</div>
+  <h2 class="detail-section-title">Finding Real Data in a Sea of Fake</h2>
+  <p>Not all datasets are what they claim to be. Four sources were evaluated before settling on the right combination. One dataset (832 matches with zero missing values) looked perfect until the finals were verified.</p>
+  <p>Algeria beat Argentina in the 2022 final. Iran won the 1990 World Cup. "Draw" won in 1982. The entire dataset was AI-generated fiction. It was discarded entirely. Lesson: always verify your data before building anything on top of it.</p>
+  <table class="detail-table">
+    <thead>
+      <tr>
+        <th>Dataset</th>
+        <th>Coverage</th>
+        <th>Rows</th>
+        <th>Verdict</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>WorldCupMatches.csv</td><td>1930-2014</td><td>4,572</td><td>&#10003; Verified, main training data</td></tr>
+      <tr><td>WorldCups.csv</td><td>1930-2014</td><td>20</td><td>&#10003; Verified, tournament summaries</td></tr>
+      <tr><td>fifa_enhanced_1974_2022.csv</td><td>1974-2022</td><td>43</td><td>&#10003; Verified, 2018 &amp; 2022 data</td></tr>
+      <tr><td>world_cup_last_50_years.csv</td><td>1974-2022</td><td>832</td><td>&#10007; Discarded, AI-generated fake</td></tr>
+    </tbody>
+  </table>
+  <p>The two verified sources were merged into a single master_matches.csv: 864 real matches from 1930 to 2022 with zero missing values.</p>
+</div>
+
+<!-- Process -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Process</div>
+  <h2 class="detail-section-title">From Raw Data to Predictions</h2>
+  <div class="phase-grid">
+    <div class="phase-item">
+      <div class="phase-label">Phase 1<br>Environment</div>
+      <div class="phase-content">
+        <div class="phase-title">Python Setup in VS Code</div>
+        <div class="phase-desc">Configured a Python 3.13 virtual environment in VS Code with pandas, numpy, scikit-learn, XGBoost, matplotlib, seaborn, and Jupyter. Fixed kernel detection issues and an OpenMP runtime error before a single line of ML code was written.</div>
+      </div>
+    </div>
+    <div class="phase-item">
+      <div class="phase-label">Phase 2<br>Data</div>
+      <div class="phase-content">
+        <div class="phase-title">Data Collection &amp; Verification</div>
+        <div class="phase-desc">Collected 4 datasets, verified each against known World Cup results, discarded one fake dataset, and merged the remaining real sources into a single master file covering 864 matches from 1930 to 2022.</div>
+      </div>
+    </div>
+    <div class="phase-item">
+      <div class="phase-label">Phase 3<br>Features</div>
+      <div class="phase-content">
+        <div class="phase-title">Feature Engineering</div>
+        <div class="phase-desc">Built team strength features from historical data: win percentage, average goals scored, average goals conceded, and average goal difference. Calculated using a sliding window so the model never sees the future. For each match, the model sees the difference in these stats between the two teams at the time they played.</div>
+      </div>
+    </div>
+    <div class="phase-item">
+      <div class="phase-label">Phase 4<br>Modelling</div>
+      <div class="phase-content">
+        <div class="phase-title">Model Training &amp; Selection</div>
+        <div class="phase-desc">Trained three models on 563 historical matches. First attempt predicted exact winners by name (30+ classes, 29% accuracy). Reframed the problem to 3 outcomes (home win, away win, draw) and accuracy jumped to 54-56%. Random Forest was selected over Logistic Regression despite a slightly lower score: it actually predicted all three outcomes rather than defaulting to home win every time.</div>
+      </div>
+    </div>
+    <div class="phase-item">
+      <div class="phase-label">Phase 5<br>Simulation</div>
+      <div class="phase-content">
+        <div class="phase-title">10,000 Tournament Simulations</div>
+        <div class="phase-desc">Built a tournament simulator that shuffles 48 teams, plays every match using model predictions, and records the winner. Initial version took 20+ minutes due to recalculating team features inside every match prediction. Solved with a pre-computed matchup cache: all 2,256 possible matchups calculated once, then looked up instantly. Runtime dropped to under 3 seconds.</div>
+      </div>
+    </div>
+    <div class="phase-item">
+      <div class="phase-label">Phase 6<br>Results</div>
+      <div class="phase-content">
+        <div class="phase-title">Predictions &amp; Visualisation</div>
+        <div class="phase-desc">Compiled win probabilities, final reach rates, and semi-final rates for all 48 teams across 10,000 simulations. Visualised results as a professional grouped bar chart.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Models -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Models</div>
+  <h2 class="detail-section-title">Choosing the Right Model</h2>
+  <p>Three models were trained and evaluated on the same 80/20 train-test split. The winner wasn't the most accurate: it was the most honest.</p>
+  <div class="model-grid">
+    <div class="model-card">
+      <div class="model-name">Logistic Regression</div>
+      <div class="model-score">56.6%</div>
+      <div class="model-desc">Highest raw accuracy but achieved it lazily: predicted home win almost every time and never once predicted a draw. Useful as a baseline but not trustworthy for simulation.</div>
+    </div>
+    <div class="model-card selected">
+      <div class="model-name">Random Forest &#10003;</div>
+      <div class="model-score">54.0%</div>
+      <div class="model-desc">Slightly lower accuracy but predicted all three outcomes meaningfully. Better F1 scores on away wins and draws. The right model for simulating a realistic tournament where any result is possible.</div>
+    </div>
+    <div class="model-card">
+      <div class="model-name">XGBoost</div>
+      <div class="model-score">47.8%</div>
+      <div class="model-desc">Came in third on this dataset. XGBoost often outperforms Random Forest on larger tabular datasets. With more data and feature engineering it would likely improve significantly.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Predictions -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Predictions</div>
+  <h2 class="detail-section-title">Who Wins the 2026 World Cup?</h2>
+  <p>After 10,000 simulated tournaments using 90 years of real match history, here are the model's top picks:</p>
+  <div class="rank-item"><div class="rank-pos">1</div><div class="rank-name">France</div><div class="rank-value">15.5%</div></div>
+  <div class="rank-item"><div class="rank-pos">2</div><div class="rank-name">Brazil</div><div class="rank-value">14.7%</div></div>
+  <div class="rank-item"><div class="rank-pos">3</div><div class="rank-name">Argentina</div><div class="rank-value">14.3%</div></div>
+  <div class="rank-item"><div class="rank-pos">4</div><div class="rank-name">Portugal</div><div class="rank-value">9.9%</div></div>
+  <div class="rank-item"><div class="rank-pos">5</div><div class="rank-name">Germany</div><div class="rank-value">7.6%</div></div>
+  <p style="margin-top: 16px;">No team exceeds 16%. A reflection of football's inherent unpredictability. Even the best professional prediction models rarely exceed 55% match accuracy. The beautiful game lives up to its name.</p>
+</div>
+
+<!-- Learnings -->
+<div class="detail-section">
+  <div class="detail-section-tag">// Learnings</div>
+  <h2 class="detail-section-title">What This Project Taught</h2>
+  <div class="insights-grid">
+    <div class="insight">
+      <div class="insight-title">Garbage In, Garbage Out</div>
+      <div class="insight-text">A model trained on fake data produces fake predictions. Data verification isn't optional: it's the most important step in any ML project. Always sanity-check your data against known ground truth before building anything.</div>
+    </div>
+    <div class="insight">
+      <div class="insight-title">Problem Framing Matters More Than the Algorithm</div>
+      <div class="insight-text">Predicting 30+ team names got 29% accuracy. Reframing to 3 outcomes (home win, away win, draw) got 54%. Same data, same model. The single biggest accuracy gain came from thinking differently about the problem, not tuning hyperparameters.</div>
+    </div>
+    <div class="insight">
+      <div class="insight-title">Accuracy Isn't Everything</div>
+      <div class="insight-text">Logistic Regression scored higher but never predicted a draw. It was gaming the metric. Random Forest scored lower but was honest about uncertainty. For a simulation tool, honesty beats raw accuracy.</div>
+    </div>
+    <div class="insight">
+      <div class="insight-title">Cache What You Can</div>
+      <div class="insight-text">The simulator took 20+ minutes because it recalculated team features inside every match prediction: 1.4 million redundant calculations. Pre-computing all 2,256 matchups once dropped runtime to under 3 seconds. Profile before optimising.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Tech Stack -->
+<div class="tech-stack">
+  <span class="tech-tag">Python 3.13</span>
+  <span class="tech-tag">pandas</span>
+  <span class="tech-tag">numpy</span>
+  <span class="tech-tag">scikit-learn</span>
+  <span class="tech-tag">XGBoost</span>
+  <span class="tech-tag">Random Forest</span>
+  <span class="tech-tag">matplotlib</span>
+  <span class="tech-tag">seaborn</span>
+  <span class="tech-tag">Jupyter Notebook</span>
+  <span class="tech-tag">VS Code</span>
+  <span class="tech-tag">Git / GitHub</span>
+</div>
+
+<footer class="footer">
+  <div class="footer-headline">Let's talk <em>data.</em></div>
+  <div class="footer-links">
+    <a href="mailto:syedijtaba.ij@gmail.com">syedijtaba.ij@gmail.com</a><br>
+    <a href="https://linkedin.com/in/ijtabajafri" target="_blank">LinkedIn</a><br>
+    <a href="https://github.com/syed-j" target="_blank">GitHub</a>
+  </div>
+</footer>
+
+</body>
+</html>
