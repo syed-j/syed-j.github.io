@@ -33,7 +33,7 @@
 <div class="detail-hero">
   <a href="index.html" class="detail-back">&larr; Back home</a>
   <h1 class="detail-title">Journey to Data &amp; AI Engineering</h1>
-  <p class="detail-subtitle">I set myself a structured two-week sprint to move from analyzing data to building the systems behind it. The result: two connected projects — an automated data pipeline and a RAG AI chatbot that answers questions over its data in plain English.</p>
+  <p class="detail-subtitle">I set myself a structured two-week sprint to move from analyzing data to building the systems behind it. The result: two connected projects, an automated data pipeline and a RAG AI chatbot that answers questions over its data in plain English.</p>
   <div class="detail-tags">
     <span class="detail-tag">Python</span>
     <span class="detail-tag">dbt</span>
@@ -80,15 +80,15 @@
 <div class="detail-section">
   <div class="detail-section-tag">Why I Built It</div>
   <h2 class="detail-section-title">From reporting on data to engineering it</h2>
-  <p>As an analyst, I lived downstream of the data — cleaning it and charting it after someone else had moved it. I wanted to own the whole stack: the pipeline that collects and transforms data automatically, and the AI layer that makes it useful without a analyst in the loop.</p>
-  <p>So I picked a live, messy, real-world data source — the Polymarket prediction-market API — and gave myself two weeks to build an end-to-end system from scratch, learning each tool by shipping with it rather than just watching tutorials.</p>
+  <p>As an analyst, I lived downstream of the data, cleaning it and charting it after someone else had moved it. I wanted to own the whole stack: the pipeline that collects and transforms data automatically, and the AI layer that makes it useful without an analyst in the loop.</p>
+  <p>So I picked a live, messy, real-world data source, the Polymarket prediction-market API, and gave myself two weeks to build an end-to-end system from scratch, learning each tool by shipping with it rather than just watching tutorials.</p>
 </div>
 
 <!-- PART 1 -->
 <div class="detail-section">
   <div class="detail-section-tag">Part 1</div>
   <h2 class="detail-section-title">The Data Pipeline</h2>
-  <p>The Polymarket API only shows the current state of each market — there is no price history. So I built a pipeline that captures a snapshot every hour, building a time-series history that doesn't otherwise exist.</p>
+  <p>The Polymarket API only shows the current state of each market; there is no price history. So I built a pipeline that captures a snapshot every hour, building a time-series history that doesn't otherwise exist.</p>
   <div class="code-block">Polymarket API  &rarr;  clean (Python/pandas)  &rarr;  DuckDB warehouse  &rarr;  dbt models  &rarr;  scheduled hourly by Airflow</div>
 </div>
 
@@ -118,7 +118,7 @@
     <div class="phase-label">Orchestrate</div>
     <div class="phase-content">
       <div class="phase-title">Schedule with Airflow</div>
-      <div class="phase-desc">An Airflow DAG runs the whole fetch &rarr; clean &rarr; load flow automatically every hour — turning a manual script into a self-running pipeline.</div>
+      <div class="phase-desc">An Airflow DAG runs the whole fetch &rarr; clean &rarr; load flow automatically every hour, turning a manual script into a self-running pipeline.</div>
     </div>
   </div>
 </div>
@@ -132,7 +132,7 @@
 <div class="detail-section">
   <div class="detail-section-tag">Part 2</div>
   <h2 class="detail-section-title">The RAG Chatbot</h2>
-  <p>The AI model knows nothing about this specific data. So instead of asking it directly, the app first <strong>retrieves</strong> the most relevant markets from a vector database, then hands them to the model to <strong>generate</strong> a grounded answer. Retrieval matches by meaning, not keywords — asking about "crypto" surfaces Bitcoin markets even though they never use the word.</p>
+  <p>The AI model knows nothing about this specific data. So instead of asking it directly, the app first <strong>retrieves</strong> the most relevant markets from a vector database, then hands them to the model to <strong>generate</strong> a grounded answer. Retrieval matches by meaning, not keywords. Asking about "crypto" surfaces Bitcoin markets even though they never use the word.</p>
   <div class="code-block">Market text &rarr; embeddings &rarr; Chroma vector DB&nbsp;&nbsp;&nbsp;(stored once)<br>Question &rarr; find closest markets &rarr; Gemini answers &rarr; served via FastAPI</div>
 </div>
 
@@ -141,7 +141,7 @@
     <div class="phase-label">Embed</div>
     <div class="phase-content">
       <div class="phase-title">Text into meaning</div>
-      <div class="phase-desc">Each market is turned into an embedding — numbers that capture its meaning — using a free, local sentence-transformers model.</div>
+      <div class="phase-desc">Each market is turned into an embedding, a set of numbers that captures its meaning, using a free, local sentence-transformers model.</div>
     </div>
   </div>
   <div class="phase-item">
@@ -155,7 +155,7 @@
     <div class="phase-label">Generate</div>
     <div class="phase-content">
       <div class="phase-title">Grounded answers with Gemini</div>
-      <div class="phase-desc">Retrieved markets and the question go to Gemini, which answers using only that data — with a guard against prompt injection.</div>
+      <div class="phase-desc">Retrieved markets and the question go to Gemini, which answers using only that data with a guard against prompt injection.</div>
     </div>
   </div>
   <div class="phase-item">
@@ -171,14 +171,14 @@
 <div class="detail-section">
   <div class="detail-section-tag">How They Connect</div>
   <h2 class="detail-section-title">One system, two halves</h2>
-  <p>The pipeline feeds the chatbot: the cleaned current-price table built by dbt is the exact data the chatbot embeds and answers from. That connection — owning both the data engineering and the AI layer on top — is the definition of the role I'm building toward.</p>
+  <p>The pipeline feeds the chatbot: the cleaned current-price table built by dbt is the exact data the chatbot embeds and answers from. That connection, owning both the data engineering and the AI layer on top, is the definition of the role I'm building toward.</p>
 </div>
 
 <!-- WHAT I LEARNED -->
 <div class="detail-columns">
   <div class="detail-col">
     <div class="detail-col-head">Data Engineering</div>
-    <p>API ingestion, warehousing in DuckDB, SQL data modeling with dbt (window functions, deduplication), and pipeline orchestration and scheduling with Apache Airflow — including debugging real failures from task logs.</p>
+    <p>API ingestion, warehousing in DuckDB, SQL data modeling with dbt (window functions, deduplication), and pipeline orchestration and scheduling with Apache Airflow, including debugging real failures from task logs.</p>
   </div>
   <div class="detail-col-divider"></div>
   <div class="detail-col">
@@ -228,7 +228,7 @@
     <a href="mailto:syedijtaba.ij@gmail.com">syedijtaba.ij@gmail.com</a><br>
     <a href="https://linkedin.com/in/ijtabajafri" target="_blank">LinkedIn</a><br>
     <a href="https://github.com/syed-j" target="_blank">GitHub</a><br>
-    <a href="Syed_Resume_new.pdf" target="_blank">Download resume</a>
+    <a href="Syed_Jafri_Resume.pdf" target="_blank">Download resume</a>
   </div>
 </footer>
 
